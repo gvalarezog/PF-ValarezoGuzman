@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { AbmAlumnosComponent } from '../abm-alumnos/abm-alumnos.component';
+import { AbmAlumnosComponent } from './abm-alumnos/abm-alumnos.component';
+
 
 export interface Alumno {
   id: number;
@@ -20,11 +21,11 @@ export interface Alumno {
 }
 
 @Component({
-  selector: 'app-lista-alumnos',
-  templateUrl: './lista-alumnos.component.html',
-  styleUrls: ['./lista-alumnos.component.scss'],
+  selector: 'app-alumnos',
+  templateUrl: './alumnos.component.html',
+  styleUrls: ['./alumnos.component.scss'],
 })
-export class ListaAlumnosComponent {
+export class AlumnosComponent {
   alumnos: Alumno[] = [
     {
       id: 1,
