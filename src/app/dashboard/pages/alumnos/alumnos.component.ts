@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { AbmAlumnosComponent } from './abm-alumnos/abm-alumnos.component';
+import { AbmAlumnosComponent } from './components/abm-alumnos/abm-alumnos.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from './services/alumnos.service';
 

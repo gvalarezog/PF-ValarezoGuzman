@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AbmAlumnosModule } from './abm-alumnos/abm-alumnos.module';
+import { AbmAlumnosModule } from './components/abm-alumnos/abm-alumnos.module';
 import { AlumnosComponent } from './alumnos.component';
 
 @NgModule({
