@@ -1,12 +1,13 @@
 <!-- <p>dashboard works!</p> -->
 <!-- side bar -->
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
+<mat-drawer-container class="example-container">
+  <mat-drawer [opened]="true" style="width: 50;" #drawer class="example-sidenav" mode="side">
+    <img width="50" height="50" src="../../assets/img/avatar.png">
+
+    <mat-nav-list>
+      <a [routerLink]="link.path" mat-list-item href="..." *ngFor="let link of links">{{ link.title }}</a>
+      <a mat-list-item (click)="logout()">Cerrar Sesión</a>
+    </mat-nav-list>
   </mat-drawer>
   <!-- wrapper -->
   <div class="example-sidenav-content">
@@ -29,8 +30,8 @@
     </mat-toolbar>
     <!-- Mis paginas -->
     <main>
-      <h3 [appFontSize]="20">Ingreso de Alumnos</h3>
-      <app-alumnos></app-alumnos>
+      <!-- <h3 [appFontSize]="20">Ingreso de Alumnos</h3> -->
+      <router-outlet></router-outlet>
     </main>
   </div>
 

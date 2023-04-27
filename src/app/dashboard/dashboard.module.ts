@@ -8,6 +8,8 @@ import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { AbmAlumnosModule } from './pages/alumnos/abm-alumnos/abm-alumnos.module';
 import { CommonModule } from '@angular/common';
 import { AlumnosModule } from './pages/alumnos/alumnos.module';
+import { RouterModule } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -20,6 +22,8 @@ import { AlumnosModule } from './pages/alumnos/alumnos.module';
     AbmAlumnosModule,
     AlumnosModule,
     DirectivesModule,
+    RouterModule,
+    MatListModule,
   ],
   exports: [DashboardComponent],
 })
