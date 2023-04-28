@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { AlumnosModule } from './pages/alumnos/alumnos.module';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { CursosModule } from './pages/cursos/cursos.module';
+import { AbmCursosComponent } from './pages/cursos/components/abm-cursos/abm-cursos.component';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -24,6 +26,20 @@ import { MatListModule } from '@angular/material/list';
     DirectivesModule,
     RouterModule,
     MatListModule,
+    CursosModule,
+    // RouterModule.forChild([
+    //   {
+    //     // http://localhost:XXXX/dashboard/estudiantes
+    //     path: 'alumnos',
+    //     loadChildren: () =>
+    //       import('./pages/alumnos/alumnos.module').then((m) => m.AlumnosModule),
+    //   },
+    //   {
+    //     path: 'cursos',
+    //     loadChildren: () =>
+    //       import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
+    //   },
+    // ]),
   ],
   exports: [DashboardComponent],
 })

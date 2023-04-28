@@ -5,6 +5,8 @@ import { AlumnosComponent } from './dashboard/pages/alumnos/alumnos.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/pages/login/login.component';
 import { AlumnoDetalleComponent } from './dashboard/pages/alumnos/components/alumno-detalle/alumno-detalle.component';
+import { CursosComponent } from './dashboard/pages/cursos/cursos.component';
+import { CursoDetalleComponent } from './dashboard/pages/cursos/components/curso-detalle/curso-detalle.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,20 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        //http://localhost/dashboard/alumnos
+        path: 'cursos',
+        children: [
+          {
+            path: '',
+            component: CursosComponent,
+          },
+          {
+            path: ':id',
+            component: CursoDetalleComponent,
+          },
+        ],
+      },
     ],
   },
   {
@@ -36,10 +52,6 @@ const routes: Routes = [
         component: LoginComponent,
       },
     ],
-  },
-  {
-    path: '**',
-    redirectTo: 'dashboard',
   },
 ];
 
