@@ -15,6 +15,10 @@ const links: NavItem[] = [
     title: 'Cursos',
     icon: 'book',
   },
+  {
+    path: 'inscripciones',
+    title: 'Incripciones',
+  },
 ];
 
 export default links;

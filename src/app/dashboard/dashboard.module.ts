@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { CursosModule } from './pages/cursos/cursos.module';
 import { AbmCursosComponent } from './pages/cursos/components/abm-cursos/abm-cursos.component';
+import { InscripcionesModule } from './pages/inscripciones/inscripciones.module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -27,6 +28,7 @@ import { AbmCursosComponent } from './pages/cursos/components/abm-cursos/abm-cur
     RouterModule,
     MatListModule,
     CursosModule,
+    // InscripcionesModule,
     // RouterModule.forChild([
     //   {
     //     // http://localhost:XXXX/dashboard/estudiantes
