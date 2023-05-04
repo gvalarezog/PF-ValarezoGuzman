@@ -19,6 +19,7 @@ export class AbmInscripcionesComponent implements OnInit {
   panelOpenState = true;
   selected = 'Escoja el curso';
   step = 0;
+  selectedValue: string;
 
   nombreCursoControl = new FormControl('', [Validators.required]);
   fechaInicioControl = new FormControl('', [Validators.required]);
@@ -34,7 +35,9 @@ export class AbmInscripcionesComponent implements OnInit {
     private cursosServicio: CursosService,
     private alumnoService: AlumnosService,
     private dialogRef: MatDialogRef<AbmInscripcionesComponent>
-  ) {}
+  ) {
+    this.selectedValue = '';
+  }
 
   setStep(index: number) {
     this.step = index;
@@ -49,11 +52,15 @@ export class AbmInscripcionesComponent implements OnInit {
   }
 
   guardarIncripcion() {
-    if (this.inscripcionForm.valid) {
-      this.dialogRef.close(this.inscripcionForm.value);
-    } else {
-      this.inscripcionForm.markAllAsTouched();
-    }
+    console.log(this.inscripcionForm.value);
+    console.log(this.selectedValue);
+    console.log(this.cursosServicio.obtenerCursoPorId(this.selectedValue));
+    // if (this.inscripcionForm.valid) {
+    //   console.log(this.inscripcionForm.value);
+    //   // this.dialogRef.close(this.inscripcionForm.value);
+    // } else {
+    //   this.inscripcionForm.markAllAsTouched();
+    // }
   }
 
   displayedColumns: string[] = ['select', 'id', 'nombre', 'apellido'];

@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [InscripcionesComponent, AbmInscripcionesComponent],
@@ -27,6 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatCheckboxModule,
     MatDialogModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class InscripcionesModule {}
