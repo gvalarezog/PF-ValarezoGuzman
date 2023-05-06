@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CursosService } from '../../../cursos/services/cursos.service';
-import { Curso } from '../../../cursos/models';
 import { AlumnosService } from '../../../alumnos/services/alumnos.service';
 import { Alumno } from '../../../alumnos/models';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { Inscripcion, CrearInscripcionPayload } from '../../models';
+import { Curso } from '../../../cursos/models/index';
 
 @Component({
   selector: 'app-abm-inscripciones',
@@ -14,21 +16,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./abm-inscripciones.component.scss'],
 })
 export class AbmInscripcionesComponent implements OnInit {
-  dataSourceAlumnos = new MatTableDataSource();
+  // dataSourceAlumnos = new MatTableDataSource();
   cursos?: Curso[];
+  alumnos?: Alumno[];
+  // cursoSelected: Curso | any;
   panelOpenState = true;
-  selected = 'Escoja el curso';
+  // selected = 'Escoja el curso';
   step = 0;
-  selectedValue: string;
+  // selectedValue: string;
+  // selectedAlumno: string;
+  // private destroyed$ = new Subject();
+  // displayedColumns: string[] = ['id', 'nombre'];
+  // dataSource = new MatTableDataSource<Alumno>();
+  // selection = new SelectionModel<Alumno>(true, []);
 
-  nombreCursoControl = new FormControl('', [Validators.required]);
-  fechaInicioControl = new FormControl('', [Validators.required]);
-  fechaFinControl = new FormControl('', [Validators.required]);
+  cursoControl = new FormControl();
+  alumnoControl = new FormControl();
+  cantidadAlumnosControl = new FormControl();
 
   inscripcionForm = new FormGroup({
-    nombreCurso: this.nombreCursoControl,
-    fecha_inicio: this.fechaInicioControl,
-    fecha_fin: this.fechaInicioControl,
+    curso: this.cursoControl,
+    alumnos: this.alumnoControl,
+    cantidadAlumnos: this.cantidadAlumnosControl,
   });
 
   constructor(
@@ -36,7 +45,9 @@ export class AbmInscripcionesComponent implements OnInit {
     private alumnoService: AlumnosService,
     private dialogRef: MatDialogRef<AbmInscripcionesComponent>
   ) {
-    this.selectedValue = '';
+    // this.selectedValue = '';
+    // this.selectedAlumno = '';
+    // this.inscripcionPayload = new CrearInscripcionPayload();
   }
 
   setStep(index: number) {
@@ -52,46 +63,7 @@ export class AbmInscripcionesComponent implements OnInit {
   }
 
   guardarIncripcion() {
-    console.log(this.inscripcionForm.value);
-    console.log(this.selectedValue);
-    console.log(this.cursosServicio.obtenerCursoPorId(this.selectedValue));
-    // if (this.inscripcionForm.valid) {
-    //   console.log(this.inscripcionForm.value);
-    //   // this.dialogRef.close(this.inscripcionForm.value);
-    // } else {
-    //   this.inscripcionForm.markAllAsTouched();
-    // }
-  }
-
-  displayedColumns: string[] = ['select', 'id', 'nombre', 'apellido'];
-  dataSource = new MatTableDataSource<Alumno>();
-  selection = new SelectionModel<Alumno>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Alumno): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.id + 1
-    }`;
+    this.dialogRef.close(this.inscripcionForm.value);
   }
 
   ngOnInit(): void {
@@ -102,7 +74,7 @@ export class AbmInscripcionesComponent implements OnInit {
     });
     this.alumnoService.obtenerAlumnos().subscribe({
       next: (alumnos) => {
-        this.dataSourceAlumnos.data = alumnos;
+        this.alumnos = alumnos;
       },
     });
   }

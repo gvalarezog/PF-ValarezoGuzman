@@ -1,8 +1,24 @@
 import { Alumno } from '../../alumnos/models';
 import { Curso } from '../../cursos/models';
 
-export interface Incripcion {
+// export interface Inscripcion {
+//   id: number;
+//   curso: Curso;
+//   alumnos: Alumno[];
+// }
+export interface Inscripcion {
   id: number;
-  Curso: Curso;
-  alumnos?: Alumno[];
+  curso: Curso;
+  alumnos: Alumno[];
+  cantidadAlumnos?: number;
+}
+
+// export interface CrearInscripcionPayload {
+//   curso: Curso;
+//   alumnos: Alumno[];
+// }
+export interface CrearInscripcionPayload {
+  curso: Curso;
+  alumnos: Alumno[];
+  cantidadAlumnos?: number;
 }

@@ -12,10 +12,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InscripcionesDetalleComponent } from './components/inscripciones-detalle/inscripciones-detalle.component';
 
 @NgModule({
-  declarations: [InscripcionesComponent, AbmInscripcionesComponent],
+  declarations: [InscripcionesComponent, AbmInscripcionesComponent, InscripcionesDetalleComponent],
   imports: [
     CommonModule,
     MatTableModule,

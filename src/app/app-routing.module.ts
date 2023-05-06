@@ -8,6 +8,7 @@ import { AlumnoDetalleComponent } from './dashboard/pages/alumnos/components/alu
 import { CursosComponent } from './dashboard/pages/cursos/cursos.component';
 import { CursoDetalleComponent } from './dashboard/pages/cursos/components/curso-detalle/curso-detalle.component';
 import { InscripcionesComponent } from './dashboard/pages/inscripciones/inscripciones.component';
+import { InscripcionesDetalleComponent } from './dashboard/pages/inscripciones/components/inscripciones-detalle/inscripciones-detalle.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
           {
             path: '',
             component: InscripcionesComponent,
+          },
+          {
+            path: ':id',
+            component: InscripcionesDetalleComponent,
           },
         ],
       },

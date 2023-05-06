@@ -1,11 +1,11 @@
 <div class="mb-3">
-  <button (click)="crearCurso()" color="primary" mat-flat-button>
+  <button (click)="crearInscripcion()" color="primary" mat-flat-button>
     <mat-icon>add</mat-icon>
     Agregar Inscripción
   </button>
 </div>
 
-<table mat-table [dataSource]="dataSourceCursos" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSourceIncripciones" class="mat-elevation-z8">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
@@ -16,43 +16,27 @@
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
 
-  <!-- Nobre Curso Column -->
+  <!-- Nombre Curso Column -->
   <ng-container matColumnDef="curso">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.curso.nombre}} </td>
+  </ng-container>
+
+  <!-- Cantidad Alumonos Curso Column -->
+  <ng-container matColumnDef="cantidad">
+    <th mat-header-cell *matHeaderCellDef> # Alumnos </th>
+    <td mat-cell *matCellDef="let element"> {{element.alumnos.length}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="detalle">
+    <th mat-header-cell *matHeaderCellDef>Ver</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="irAlDetalle(element.id)">
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-<div>
-  <mat-accordion>
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Incripcion 1
-        </mat-panel-title>
-        <mat-panel-description>
-          Curso Node
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Alumnos</p>
-      <p>Alumnos</p>
-      <p>Alumnos</p>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Incripcion 2
-        </mat-panel-title>
-        <mat-panel-description>
-          Curso Python
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Alumnos</p>
-      <p>Alumnos</p>
-      <p>Alumnos</p>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
