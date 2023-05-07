@@ -3,6 +3,8 @@
 <mat-drawer-container class="example-container">
   <mat-drawer [opened]="true" style="width: 50;" #drawer class="example-sidenav" mode="side">
     <img width="50" height="50" src="../../assets/img/avatar.png">
+    <p>{{ (authUser$ | async)?.nombre }}</p>
+    <p>{{ (authUser$ | async)?.email }}</p>
 
     <mat-nav-list>
       <a [routerLink]="link.path" mat-list-item href="..." *ngFor="let link of links"><mat-icon
