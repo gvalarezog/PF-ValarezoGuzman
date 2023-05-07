@@ -29,13 +29,18 @@ import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    // RouterModule.forChild([
-    //   {
-    //     // /dashboard/cursos
-    //     path: '',
-    //     component: CursosComponent,
-    //   },
-    // ]),
+    RouterModule.forChild([
+      {
+        // /dashboard/cursos
+        path: '',
+        component: CursosComponent,
+      },
+      {
+        // /dashboard/cursos/id
+        path: ':id',
+        component: CursoDetalleComponent,
+      },
+    ]),
   ],
 })
 export class CursosModule {}

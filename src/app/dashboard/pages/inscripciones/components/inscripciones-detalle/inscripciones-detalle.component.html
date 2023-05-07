@@ -2,4 +2,7 @@
 <p>Nombre Curso: {{inscripcion?.curso?.nombre}}</p>
 <p>Cantidad Alumnos:{{inscripcion?.alumnos?.length}}</p>
 <p>Inscritos:</p>
-<p *ngFor="let alumno of inscripcion?.alumnos">{{alumno.nombre}} {{alumno.apellido}}</p>
+
+<ul>
+  <li *ngFor="let alumno of inscripcion?.alumnos">{{alumno.nombre}} {{alumno.apellido}}</li>
+</ul>

@@ -14,9 +14,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InscripcionesDetalleComponent } from './components/inscripciones-detalle/inscripciones-detalle.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [InscripcionesComponent, AbmInscripcionesComponent, InscripcionesDetalleComponent],
+  declarations: [
+    InscripcionesComponent,
+    AbmInscripcionesComponent,
+    InscripcionesDetalleComponent,
+  ],
   imports: [
     CommonModule,
     MatTableModule,
@@ -31,6 +36,18 @@ import { InscripcionesDetalleComponent } from './components/inscripciones-detall
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule.forChild([
+      {
+        // /dashboard/cursos
+        path: '',
+        component: InscripcionesComponent,
+      },
+      {
+        // /dashboard/cursos
+        path: ':id',
+        component: InscripcionesDetalleComponent,
+      },
+    ]),
   ],
 })
 export class InscripcionesModule {}

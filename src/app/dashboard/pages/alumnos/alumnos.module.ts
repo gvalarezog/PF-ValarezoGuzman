@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AbmAlumnosModule } from './components/abm-alumnos/abm-alumnos.module';
 import { AlumnosComponent } from './alumnos.component';
+import { RouterModule } from '@angular/router';
+import { AlumnoDetalleComponent } from './components/alumno-detalle/alumno-detalle.component';
 
 @NgModule({
   declarations: [AlumnosComponent],
@@ -22,6 +24,16 @@ import { AlumnosComponent } from './alumnos.component';
     MatButtonModule,
     AbmAlumnosModule,
     MatDialogModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: AlumnosComponent,
+      },
+      {
+        path: ':id',
+        component: AlumnoDetalleComponent,
+      },
+    ]),
   ],
   exports: [AlumnosComponent],
 })
