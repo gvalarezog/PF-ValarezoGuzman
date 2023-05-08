@@ -4,21 +4,27 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/pages/login/login.component';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { LoginGuard } from './auth/guards/login.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     // AUTH
     path: 'auth',
-    // canActivate: [AuthGuard],
+    // canActivate: [LoginGuard],
     component: AuthComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    // CUALQUIER RUTA
+    path: '**',
+    redirectTo: 'dashboard',
   },
 ];
 

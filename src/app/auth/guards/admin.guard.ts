@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -12,9 +11,8 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
-
+export class AdminGuard implements CanActivate {
+  constructor(private authService: AuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,10 +21,12 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.authService.verificarToken().pipe(
+    console.log('here');
+    return this.authService.obtenerUsuarioAutenticado().pipe(
       map((usuarioAutenticado) => {
-        if (usuarioAutenticado) {
-          return this.router.createUrlTree(['dashboard']);
+        if (usuarioAutenticado?.role !== 'admin') {
+          alert('No tienes permiso');
+          return false;
         } else {
           return true;
         }

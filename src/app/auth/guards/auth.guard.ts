@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.authService.obtenerUsuarioAutenticado().pipe(
+    return this.authService.verificarToken().pipe(
       map((usuarioAutenticado) => {
         if (!usuarioAutenticado) {
           return this.router.createUrlTree(['auth', 'login']);
@@ -32,5 +32,6 @@ export class AuthGuard implements CanActivate {
         }
       })
     );
+    // return true;
   }
 }

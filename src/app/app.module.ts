@@ -11,9 +11,7 @@ import { AlumnoDetalleComponent } from './dashboard/pages/alumnos/components/alu
 import { AbmCursosComponent } from './dashboard/pages/cursos/components/abm-cursos/abm-cursos.component';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
-import { AlumnosComponent } from './dashboard/pages/alumnos/alumnos.component';
-import { CursosComponent } from './dashboard/pages/cursos/cursos.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +22,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppRoutingModule,
     AuthModule,
     DashboardModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
