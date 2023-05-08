@@ -1,39 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
 import { CrearCursoPayload, Curso } from '../models';
-
-const CURSOS_MOCKS: Curso[] = [
-  {
-    id: 1,
-    nombre: 'Angular',
-    fecha_fin: new Date(),
-    fecha_inicio: new Date(),
-  },
-  {
-    id: 2,
-    nombre: 'Javascript',
-    fecha_fin: new Date(),
-    fecha_inicio: new Date(),
-  },
-  {
-    id: 3,
-    nombre: 'Desarrollo Web',
-    fecha_fin: new Date(),
-    fecha_inicio: new Date(),
-  },
-];
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CursosService {
   private cursos$ = new BehaviorSubject<Curso[]>([]);
+  private apiBaseUrl: string;
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {
+    this.apiBaseUrl = `http://localhost:3000`;
+  }
 
-  obtenerCurso(): Observable<Curso[]> {
-    this.cursos$.next(CURSOS_MOCKS);
+  get cursos(): Observable<Curso[]> {
     return this.cursos$.asObservable();
+  }
+
+  obtenerCursos(): Observable<Curso[]> {
+    return this.httpClient.get<Curso[]>(`${this.apiBaseUrl}/cursos`).pipe(
+      tap((cursos) => this.cursos$.next(cursos)),
+      mergeMap(() => this.cursos$.asObservable())
+    );
   }
 
   crearCurso(payload: CrearCursoPayload): Observable<Curso[]> {
@@ -75,7 +64,6 @@ export class CursosService {
       complete: () => {},
       error: () => {},
     });
-
     return this.cursos$.asObservable();
   }
 

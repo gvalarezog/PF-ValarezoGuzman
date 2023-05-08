@@ -18,6 +18,7 @@ const links: NavItem[] = [
   {
     path: 'inscripciones',
     title: 'Incripciones',
+    icon: 'auto_stories',
   },
 ];
 

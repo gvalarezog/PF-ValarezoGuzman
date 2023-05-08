@@ -67,7 +67,7 @@ export class AbmInscripcionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cursosServicio.obtenerCurso().subscribe({
+    this.cursosServicio.obtenerCursos().subscribe({
       next: (cursos) => {
         this.cursos = cursos;
       },

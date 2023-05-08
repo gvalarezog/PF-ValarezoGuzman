@@ -7,23 +7,24 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AbmAlumnosModule } from './components/abm-alumnos/abm-alumnos.module';
 import { AlumnosComponent } from './alumnos.component';
 import { RouterModule } from '@angular/router';
 import { AlumnoDetalleComponent } from './components/alumno-detalle/alumno-detalle.component';
+import { AbmAlumnosComponent } from './components/abm-alumnos/abm-alumnos.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AlumnosComponent],
+  declarations: [AlumnosComponent, AbmAlumnosComponent, AlumnoDetalleComponent],
   imports: [
     CommonModule,
     MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
     SharedModule,
+    MatFormFieldModule,
     MatIconModule,
-    MatButtonModule,
-    AbmAlumnosModule,
     MatDialogModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',

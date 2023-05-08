@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./cursos.component.scss'],
 })
 export class CursosComponent implements OnInit {
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<Curso>();
 
   displayedColumns = [
     'id',
@@ -26,13 +26,17 @@ export class CursosComponent implements OnInit {
 
   constructor(
     private cursosService: CursosService,
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.cursosService.obtenerCursos().subscribe((cursos) => {
+      this.dataSource.data = cursos;
+    });
+  }
 
   ngOnInit(): void {
-    this.cursosService.obtenerCurso().subscribe({
+    this.cursosService.obtenerCursos().subscribe({
       next: (cursos) => {
         this.dataSource.data = cursos;
       },
@@ -40,7 +44,7 @@ export class CursosComponent implements OnInit {
   }
 
   crearCurso(): void {
-    const dialog = this.dialog.open(AbmCursosComponent);
+    const dialog = this.matDialog.open(AbmCursosComponent);
     dialog.afterClosed().subscribe((formValue) => {
       if (formValue) {
         this.cursosService.crearCurso(formValue);
@@ -48,16 +52,19 @@ export class CursosComponent implements OnInit {
     });
   }
 
-  editarCurso(curso: Curso): void {
-    const dialog = this.dialog.open(AbmCursosComponent, {
+  editarCurso(cursoParaEditar: Curso): void {
+    const dialog = this.matDialog.open(AbmCursosComponent, {
       data: {
-        curso,
+        cursoParaEditar,
       },
     });
-
-    dialog.afterClosed().subscribe((formValue) => {
-      if (formValue) {
-        this.cursosService.editarCurso(curso.id, formValue);
+    dialog.afterClosed().subscribe((valorDelFormulario) => {
+      if (valorDelFormulario) {
+        this.dataSource.data = this.dataSource.data.map((cursoActual) =>
+          cursoActual.id === cursoParaEditar.id
+            ? { ...cursoActual, ...valorDelFormulario } // { nombre: 'xxxxxx', apellido: 'xxxxx' }
+            : cursoActual
+        );
       }
     });
   }

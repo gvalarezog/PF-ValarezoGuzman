@@ -16,7 +16,7 @@ import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component
 import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.component';
 
 @NgModule({
-  declarations: [CursosComponent, AbmCursosComponent],
+  declarations: [CursosComponent, AbmCursosComponent, CursoDetalleComponent],
   imports: [
     CommonModule,
     PipesModule,

@@ -16,8 +16,6 @@ export class AlumnosComponent {
     'id',
     'nombreCompleto',
     'email',
-    'curso',
-    'vip',
     'ver_detalle',
     'editar',
     'eliminar',
@@ -56,14 +54,6 @@ export class AlumnosComponent {
             nombre: valor.nombre,
             apellido: valor.apellido,
             email: valor.email,
-            curso: valor.curso,
-            password: valor.password,
-            direccion: valor.direccion,
-            direccion2: valor.direccion2,
-            ciudad: valor.ciudad,
-            provincia: valor.provincia,
-            zip: valor.zip,
-            vip: valor.vip,
           },
         ];
       }

@@ -1,65 +1,47 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Alumno } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlumnosService {
-  private alumnos$ = new BehaviorSubject<Alumno[]>([
-    {
-      id: 1,
-      nombre: 'Guillermo',
-      apellido: 'Valarezo',
-      email: 'gv@mail.com',
-      curso: 'Node',
-      password: '',
-      direccion: '',
-      direccion2: '',
-      ciudad: '',
-      provincia: '',
-      zip: '',
-      vip: false,
-    },
-    {
-      id: 2,
-      nombre: 'Leo',
-      apellido: 'Messi',
-      email: 'lm@mail.com',
-      curso: 'Python',
-      password: '',
-      direccion: '',
-      direccion2: '',
-      ciudad: '',
-      provincia: '',
-      zip: '',
-      vip: false,
-    },
-    {
-      id: 3,
-      nombre: 'Fideo',
-      apellido: 'Di Maria',
-      email: 'fd@mail.com',
-      curso: 'Java',
-      password: '',
-      direccion: 'Avenida',
-      direccion2: 'Calle',
-      ciudad: 'Rosario',
-      provincia: 'Guayas',
-      zip: '00023',
-      vip: true,
-    },
-  ]);
+  private alumnos$ = new BehaviorSubject<Alumno[]>([]);
+  private apiBaseUrl: string;
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {
+    this.apiBaseUrl = `http://localhost:3000`;
+  }
+
+  get alumnos(): Observable<Alumno[]> {
+    return this.alumnos$.asObservable();
+  }
 
   obtenerAlumnos(): Observable<Alumno[]> {
-    return this.alumnos$.asObservable();
+    return this.httpClient.get<Alumno[]>(`${this.apiBaseUrl}/alumnos`).pipe(
+      tap((alumnos) => this.alumnos$.next(alumnos)),
+      mergeMap(() => this.alumnos$.asObservable())
+    );
   }
 
   obtenerAlumnoPorId(id: number): Observable<Alumno | undefined> {
     return this.alumnos$
       .asObservable()
       .pipe(map((alumnos) => alumnos.find((a) => a.id === id)));
+  }
+
+  eliminarAlumono(alumnoId: number): Observable<Alumno[]> {
+    this.alumnos$.pipe(take(1)).subscribe({
+      next: (alumno) => {
+        const alumnosActualizados = alumno.filter(
+          (alumno) => alumno.id !== alumnoId
+        );
+        this.alumnos$.next(alumnosActualizados);
+      },
+      complete: () => {},
+      error: () => {},
+    });
+    return this.alumnos$.asObservable();
   }
 }

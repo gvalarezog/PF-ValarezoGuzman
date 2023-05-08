@@ -1,198 +1,40 @@
-<h1 mat-dialog-tittle>ABM Alumnos</h1>
+<h1 mat-dialog-title>ABM Alumnos</h1>
 <div mat-dialog-content>
-  <main class="container-fluid">
-    <section class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">Formulario</h5>
-        <form [formGroup]="registerForm" class="row g-3">
-          <div class="row g-3">
-            <div class="col">
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre</mat-label>
-                <input matInput [formControl]="nombreControl"
-                  [ngClass]="{'is-invalid': nombreControl.invalid && nombreControl.touched}" class="form-control"
-                  placeholder="Nombre">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>El nombre debe tener minimo 6 caracteres</mat-hint>
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
-              <!-- <label for="nombre" class="form-label">Nombre</label>
-              <input [formControl]="nombreControl" type="text"
-                [ngClass]="{'is-invalid': nombreControl.invalid && nombreControl.touched}" class="form-control"
-                placeholder="Nombre" aria-label="Nombre"> -->
-              <!-- <app-form-error-helper *ngIf="nombreControl.invalid && nombreControl.touched"
-                [formErrors]="nombreControl.errors"></app-form-error-helper> -->
-              <!-- <div *ngIf="nombreControl.hasError('required') && nombreControl.touched" class="invalid-feedback">Mínimo 10
-                caracteres</div>
-              <div *ngIf="nombreControl.hasError('required') && nombreControl.touched" class="invalid-feedback">Requerido
-              </div> -->
+  <form class="grid formgrid" [formGroup]="alumnosForm">
+    <!-- CONTROL DE NOMBRE -->
 
-            </div>
-            <div class="col">
-              <!-- <label for="apellido" class="form-label">Apellido</label>
-              <input [formControl]="apellidoControl" type="text"
-                [ngClass]="{'is-invalid': apellidoControl.invalid && apellidoControl.touched}" class="form-control"
-                placeholder="Apellido" aria-label="Apellido">
-              <app-form-error-helper *ngIf="apellidoControl.invalid && apellidoControl.touched"
-                [formErrors]="apellidoControl.errors"></app-form-error-helper> -->
-              <mat-form-field appearance="fill">
-                <mat-label>Apellido</mat-label>
-                <input matInput [formControl]="apellidoControl"
-                  [ngClass]="{'is-invalid': apellidoControl.invalid && apellidoControl.touched}" class="form-control"
-                  placeholder="Apellido">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>El apellido debe tener minimo 6 caracteres</mat-hint>
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <!-- <label for="inputEmail" class="form-label">Email</label>
-              <input [formControl]="emailControl" type="email" class="form-control"
-                [ngClass]="{'is-invalid': emailControl.invalid && emailControl.touched}" id="inputEmail"
-                placeholder="user@mail.com">
-              <app-form-error-helper *ngIf="emailControl.invalid && emailControl.touched"
-                [formErrors]="emailControl.errors"></app-form-error-helper> -->
-              <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput [formControl]="emailControl"
-                  [ngClass]="{'is-invalid': emailControl.invalid && emailControl.touched}" class="form-control"
-                  placeholder="Email">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>El email debe ser válido</mat-hint>
-                <mat-error>El email es requerido y debe ser válido</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Curso</mat-label>
-                <select matNativeControl required [formControl]="cursoControl"
-                  [ngClass]="{'is-invalid': cursoControl.invalid && cursoControl.touched}">
-                  <option value="node">Node</option>
-                  <option value="java">Java</option>
-                  <option value="python">Python</option>
-                </select>
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
+    <div class="col-12 field">
+      <mat-form-field class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input [formControl]="nombreControl" type="text" matInput>
+        <mat-error *ngFor="let error of nombreControl.errors | keyvalue">{{ error | controlErrorMessages }}</mat-error>
+      </mat-form-field>
+    </div>
 
-              <!-- <label for="curso" class="form-label">Curso</label>
-              <select [formControl]="cursoControl" id="curso" class="form-select"
-                [ngClass]="{'is-invalid': cursoControl.invalid && cursoControl.touched}">
-                <option selected>Escoger...</option>
-                <option>Node</option>
-                <option>Python</option>
-                <option>Java</option>
-              </select>
-              <app-form-error-helper *ngIf="cursoControl.invalid && cursoControl.touched"
-                [formErrors]="cursoControl.errors"></app-form-error-helper> -->
-            </div>
-          </div>
 
-          <div class="row g-3">
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <input matInput [formControl]="passwordControl"
-                  [ngClass]="{'is-invalid': passwordControl.invalid && passwordControl.touched}" class="form-control"
-                  placeholder="Passowrd" type="password">
-                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                <mat-hint>La contraseña debe ser de mínimo 8 caracteres</mat-hint>
-                <mat-error>La contraseña es requerida.</mat-error>
-              </mat-form-field>
-              <!-- <label for="inputPassword" class="form-label">Password</label>
-              <input [formControl]="passwordControl" type="password"
-                [ngClass]="{'is-invalid': passwordControl.invalid && passwordControl.touched}" class="form-control"
-                id="inputPassword">
-              <app-form-error-helper *ngIf="passwordControl.invalid && passwordControl.touched"
-                [formErrors]="passwordControl.errors"></app-form-error-helper> -->
-            </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <input matInput [formControl]="repasswordControl"
-                  [ngClass]="{'is-invalid': repasswordControl.invalid && repasswordControl.touched}"
-                  class="form-control" placeholder="Passowrd" type="password">
-                <mat-hint>La contraseña debe ser de mínimo 8 caracteres</mat-hint>
-                <mat-error>La contraseña es requerida.</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row g-3">
-            <div class="col-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Direccion</mat-label>
-                <input matInput [formControl]="direccionControl"
-                  [ngClass]="{'is-invalid': direccionControl.invalid && direccionControl.touched}" class="form-control"
-                  placeholder="Av. Simpre Viva">
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Direccion 2</mat-label>
-                <input matInput [formControl]="direccion2Control" placeholder="Av. Simpre Viva">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Ciudad</mat-label>
-                <input matInput [formControl]="ciudadControl"
-                  [ngClass]="{'is-invalid': ciudadControl.invalid && ciudadControl.touched}" class="form-control"
-                  placeholder="Ciudad">
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-md-4">
-              <!-- <label for="inputState" class="form-label">Provincia</label>
-              <select [formControl]="provinciaControl" id="inputState"
-                [ngClass]="{'is-invalid': provinciaControl.invalid && provinciaControl.touched}" class="form-select">
-                <option selected>Escoger...</option>
-                <option>Guayas</option>
-                <option>El Oro</option>
-              </select>
-              <app-form-error-helper *ngIf="provinciaControl.invalid && provinciaControl.touched"
-                [formErrors]="provinciaControl.errors"></app-form-error-helper> -->
+    <!-- CONTROL DE APELLIDO -->
+    <div class="col-12 field">
+      <mat-form-field class="w-full">
+        <mat-label>Apellido</mat-label>
+        <input [formControl]="apellidoControl" type="text" matInput>
+        <mat-error *ngFor="let error of apellidoControl.errors | keyvalue">{{ error | controlErrorMessages
+          }}</mat-error>
+      </mat-form-field>
+    </div>
 
-              <mat-form-field appearance="fill">
-                <mat-label>Provincia</mat-label>
-                <select matNativeControl required [formControl]="provinciaControl"
-                  [ngClass]="{'is-invalid': provinciaControl.invalid && provinciaControl.touched}">
-                  <option value="guayas">Guayas</option>
-                  <option value="eloro">El Oro</option>
+    <!-- CONTROL DE EMAIL -->
+    <div class="col-12 field">
+      <mat-form-field class="w-full">
+        <mat-label>Apellido</mat-label>
+        <input [formControl]="emailControl" type="text" matInput>
+        <mat-error *ngFor="let error of emailControl.errors | keyvalue">{{ error | controlErrorMessages
+          }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
 
-                </select>
-                <mat-error>Este es un campo requerido</mat-error>
-              </mat-form-field>
-
-            </div>
-            <div class="col-md-2">
-              <mat-form-field appearance="fill">
-                <mat-label>Zip</mat-label>
-                <input matInput [formControl]="zipControl" placeholder="Código Postal">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="form-check">
-              <!-- <input [formControl]="vipControl" class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                VIP
-              </label> -->
-              <mat-checkbox [formControl]="vipControl">
-                VIP
-              </mat-checkbox>
-            </div>
-          </div>
-          <!-- <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-          </div> -->
-          <div mat-dialog-actions>
-            <button mat-button mat-dialog-close color="primary">Cancelar</button>
-            <button (click)="guardar()" mat-button color="primary">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button (click)="guardar()" mat-button>Guardar</button>
 </div>

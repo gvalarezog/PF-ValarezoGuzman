@@ -38,5 +38,25 @@
       "fecha_fin": "2023-04-27T01:27:59.631Z",
       "fecha_inicio": "2023-04-27T01:27:59.631Z"
     }
+  ],
+  "alumnos": [
+    {
+      "id": 1,
+      "nombre": "Guillermo",
+      "apellido": "Valarezo",
+      "email": "gv@mail.com"
+    },
+    {
+      "id": 2,
+      "nombre": "Leo",
+      "apellido": "Messi",
+      "email": "lm@mail.com"
+    },
+    {
+      "id": 3,
+      "nombre": "Fideo",
+      "apellido": "Di Maria",
+      "email": "fd@mail.com"
+    }
   ]
 }
