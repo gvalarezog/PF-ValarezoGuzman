@@ -4,7 +4,7 @@ import { CrearInscripcionPayload, Inscripcion } from '../models';
 
 const INSCRIPCIONES_MOCKS: Inscripcion[] = [
   {
-    id: 1,
+    id: 4,
     curso: {
       id: 1,
       nombre: 'Angular',
@@ -25,7 +25,6 @@ const INSCRIPCIONES_MOCKS: Inscripcion[] = [
         email: 'gv@mail.com',
       },
     ],
-    cantidadAlumnos: 2,
   },
   {
     id: 2,
@@ -37,10 +36,10 @@ const INSCRIPCIONES_MOCKS: Inscripcion[] = [
     },
     alumnos: [
       {
-        id: 3,
-        nombre: 'Fideo',
-        apellido: 'Di Maria',
-        email: 'fd@mail.com',
+        id: 2,
+        nombre: 'Lio',
+        apellido: 'Messi',
+        email: 'lm@mail.com',
       },
       {
         id: 1,
@@ -49,7 +48,6 @@ const INSCRIPCIONES_MOCKS: Inscripcion[] = [
         email: 'gv@mail.com',
       },
     ],
-    cantidadAlumnos: 2,
   },
 ];
 
@@ -93,5 +91,19 @@ export class InscripcionesService {
     return this.inscripciones$
       .asObservable()
       .pipe(map((inscripciones) => inscripciones.find((a) => a.id === id)));
+  }
+
+  obtenerInscripcionesPorCursoId(idCurso: number): Observable<Inscripcion[]> {
+    this.obtenerInscripciones()
+      .pipe(take(1))
+      .subscribe({
+        next: (inscripciones) => {
+          const inscripcionActualizada = inscripciones.filter(
+            (inscripcion) => inscripcion.curso.id === idCurso
+          );
+          this.inscripciones$.next(inscripcionActualizada);
+        },
+      });
+    return this.inscripciones$.asObservable();
   }
 }

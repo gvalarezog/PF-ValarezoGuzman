@@ -5,11 +5,9 @@ export interface Inscripcion {
   id: number;
   curso: Curso;
   alumnos: Alumno[];
-  cantidadAlumnos?: number;
 }
 
 export interface CrearInscripcionPayload {
   curso: Curso;
   alumnos: Alumno[];
-  cantidadAlumnos?: number;
 }

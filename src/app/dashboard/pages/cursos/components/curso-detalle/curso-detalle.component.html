@@ -1,3 +1,32 @@
-<p>Nombre: {{curso?.nombre}}</p>
-<p>Fecha Incio: {{curso?.fecha_inicio | date: 'dd/MM/YYYY'}}</p>
-<p>Fecha Fin: {{curso?.fecha_fin | date: 'dd/MM/YYYY' }}</p>
+<p><strong>Nombre: </strong>{{curso?.nombre}}</p>
+<p><strong>Fecha Incio:</strong> {{curso?.fecha_inicio | date: 'dd/MM/YYYY'}}</p>
+<p><strong>Fecha Fin:</strong> {{curso?.fecha_fin | date: 'dd/MM/YYYY' }}</p>
+<br>
+
+<table *ngIf="existeInscripcion" mat-table [dataSource]="dataSourceAlumnos" class="mat-elevation-z8">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombreCompleto">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element | nombreCompleto}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="anular">
+    <th mat-header-cell *matHeaderCellDef>Anular Registro</th>
+    <td mat-cell *matCellDef="let alumno">
+      <button mat-icon-button>
+        <mat-icon>playlist_remove</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<p *ngIf="!existeInscripcion">Sin estudiantes registrados.</p>

@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AlumnosService } from '../../services/alumnos.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Alumno } from '../../models';
+import { Inscripcion } from '../../../inscripciones/models';
+import { InscripcionesService } from '../../../inscripciones/services/inscripciones.service';
 
 @Component({
   selector: 'app-alumno-detalle',
@@ -11,11 +13,13 @@ import { Alumno } from '../../models';
 })
 export class AlumnoDetalleComponent implements OnDestroy {
   alumno: Alumno | undefined;
+  inscripciones: Inscripcion[] | undefined;
 
   private destroyed$ = new Subject();
   constructor(
     private activatedRoute: ActivatedRoute,
-    private alumnosService: AlumnosService
+    private alumnosService: AlumnosService,
+    private inscripcionService: InscripcionesService
   ) {
     this.alumnosService
       .obtenerAlumnoPorId(parseInt(this.activatedRoute.snapshot.params['id']))
