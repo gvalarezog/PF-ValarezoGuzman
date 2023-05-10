@@ -62,7 +62,7 @@ export class CursosComponent implements OnInit {
       if (valorDelFormulario) {
         this.dataSource.data = this.dataSource.data.map((cursoActual) =>
           cursoActual.id === cursoParaEditar.id
-            ? { ...cursoActual, ...valorDelFormulario } // { nombre: 'xxxxxx', apellido: 'xxxxx' }
+            ? { ...cursoActual, ...valorDelFormulario }
             : cursoActual
         );
       }

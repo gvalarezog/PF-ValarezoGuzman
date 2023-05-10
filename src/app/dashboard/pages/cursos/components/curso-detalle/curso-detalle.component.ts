@@ -39,7 +39,6 @@ export class CursoDetalleComponent implements OnDestroy {
       )
       .pipe(takeUntil(this.destroyed$))
       .subscribe((inscripcion) => {
-        console.log(inscripcion);
         if (inscripcion.length > 0) {
           this.existeInscripcion = true;
           this.dataSourceAlumnos.data = inscripcion[0].alumnos || [];
@@ -51,5 +50,11 @@ export class CursoDetalleComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);
+  }
+
+  anularInscripcionAlumno(idAlumno: number): void {
+    if (confirm('Está seguro?')) {
+      this.inscripcionesService.anularInscripcionAlumno(idAlumno);
+    }
   }
 }

@@ -19,7 +19,7 @@
   <ng-container matColumnDef="anular">
     <th mat-header-cell *matHeaderCellDef>Anular Registro</th>
     <td mat-cell *matCellDef="let alumno">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="anularInscripcionAlumno(alumno.id)">
         <mat-icon>playlist_remove</mat-icon>
       </button>
     </td>

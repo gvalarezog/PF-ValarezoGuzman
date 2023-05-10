@@ -106,4 +106,18 @@ export class InscripcionesService {
       });
     return this.inscripciones$.asObservable();
   }
+  anularInscripcionAlumno(idAlumno: number): Observable<Inscripcion[]> {
+    console.log(this.inscripciones$);
+    console.log(idAlumno);
+    this.inscripciones$.asObservable().subscribe({
+      next: (inscripcion) => {
+        const alumnosActualizado = inscripcion[0].alumnos.filter(
+          (alumno) => alumno.id !== idAlumno
+        );
+        console.log(alumnosActualizado);
+        const inscripcionActualizada = inscripcion[0].alumnos;
+      },
+    });
+    return this.inscripciones$.asObservable();
+  }
 }
