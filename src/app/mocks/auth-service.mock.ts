@@ -16,7 +16,7 @@ export class AuthServiceMock {
   private authUser$ = new BehaviorSubject<Usuario | null>(null);
 
   login(formValue: LoginFormValue): void {
-    // this.authUser$.next(USUARIO_ADMIN_MOCK);
+    this.authUser$.next(USUARIO_ADMIN_MOCK);
   }
 
   verificarToken(): Observable<boolean> {
