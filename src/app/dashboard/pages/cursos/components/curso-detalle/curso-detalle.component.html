@@ -1,6 +1,6 @@
-<p><strong>Nombre: </strong>{{curso?.nombre}}</p>
-<p><strong>Fecha Incio:</strong> {{curso?.fecha_inicio | date: 'dd/MM/YYYY'}}</p>
-<p><strong>Fecha Fin:</strong> {{curso?.fecha_fin | date: 'dd/MM/YYYY' }}</p>
+<p><strong>Nombre: </strong>{{cursoMateria?.subject?.nombre}}</p>
+<p><strong>Fecha Incio:</strong> {{cursoMateria?.fecha_inicio | date: 'dd/MM/YYYY'}}</p>
+<p><strong>Fecha Fin:</strong> {{cursoMateria?.fecha_fin | date: 'dd/MM/YYYY' }}</p>
 <br>
 
 <table *ngIf="existeInscripcion" mat-table [dataSource]="dataSourceAlumnos" class="mat-elevation-z8">

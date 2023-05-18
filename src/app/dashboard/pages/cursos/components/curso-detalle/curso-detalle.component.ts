@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { CursosService } from '../../services/cursos.service';
-import { Curso } from '../../models';
+import { Curso, CursoMateria } from '../../models';
 import { InscripcionesService } from '../../../inscripciones/services/inscripciones.service';
 import { Inscripcion } from '../../../inscripciones/models/index';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,8 @@ import { Alumno } from '../../../alumnos/models';
   styleUrls: ['./curso-detalle.component.scss'],
 })
 export class CursoDetalleComponent implements OnDestroy {
-  curso: Curso | undefined;
+  // curso: Curso | undefined;
+  cursoMateria: CursoMateria | undefined;
   private destroyed$ = new Subject();
   dataSourceAlumnos = new MatTableDataSource<Alumno>();
   existeInscripcion = false;
@@ -31,7 +32,7 @@ export class CursoDetalleComponent implements OnDestroy {
     this.cursoService
       .obtenerCursoPorId(parseInt(this.activatedRoute.snapshot.params['id']))
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((curso) => (this.curso = curso));
+      .subscribe((cursoMateria) => (this.cursoMateria = cursoMateria));
 
     this.inscripcionesService
       .obtenerInscripcionesPorCursoId(

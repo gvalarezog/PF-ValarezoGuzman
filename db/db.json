@@ -1,62 +1,114 @@
 {
-  "usuarios": [
+  "users": [
     {
       "id": 1,
-      "nombre": "Luis",
-      "apellido": "Perez",
-      "email": "lperez@mail.com",
-      "password": "1234",
+      "nombre": "Josué",
+      "apellido": "Baez",
+      "email": "josue@mail.com",
+      "password": "123456",
       "token": "hjsdfJHFDSAFMsaDsan12sdanjjadashj3FDBEWH",
       "role": "admin"
     },
     {
-      "nombre": "Facundo",
+      "nombre": "Luis",
       "apellido": "Perez",
-      "email": "juan@email.com",
-      "password": "123456",
+      "email": "lperez@mail.com",
+      "password": "1234",
       "token": "nmdsgfjhuMDKSAFJASDK327SJDKANjsadnsah",
       "role": "user",
       "id": 4
     }
   ],
-  "cursos": [
+  "courses": [
     {
       "id": 1,
-      "nombre": "Angular",
+      "subjectId": 1,
       "fecha_fin": "2023-04-27T01:27:59.631Z",
       "fecha_inicio": "2023-04-27T01:27:59.631Z"
     },
     {
       "id": 2,
-      "nombre": "Javascript",
+      "subjectId": 2,
       "fecha_fin": "2023-04-27T01:27:59.631Z",
       "fecha_inicio": "2023-04-27T01:27:59.631Z"
     },
     {
       "id": 3,
-      "nombre": "Desarrollo Web",
+      "subjectId": 2,
       "fecha_fin": "2023-04-27T01:27:59.631Z",
       "fecha_inicio": "2023-04-27T01:27:59.631Z"
     }
   ],
-  "alumnos": [
+  "subjects": [
     {
       "id": 1,
-      "nombre": "Guillermo",
-      "apellido": "Valarezo",
-      "email": "gv@mail.com"
+      "nombre": "Angular",
+      "description": "Curso de Angular con duración de 2 meses."
     },
     {
       "id": 2,
-      "nombre": "Leo",
-      "apellido": "Messi",
-      "email": "lm@mail.com"
+      "nombre": "Desarrollo Web"
     },
     {
       "id": 3,
+      "nombre": "Desarrollo Javascript"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": 2,
+      "subjectId": 2,
+      "studentId": 1,
+      "courseId": 2
+    },
+    {
+      "subjectId": 1,
+      "studentId": 3,
+      "courseId": 1,
+      "id": 3
+    },
+    {
+      "subjectId": 1,
+      "studentId": 3,
+      "courseId": 1,
+      "id": 4
+    },
+    {
+      "subjectId": 2,
+      "studentId": 1,
+      "courseId": 2,
+      "id": 5
+    }
+  ],
+  "students": [
+    {
+      "id": 3,
+      "nombre": "Lio",
+      "apellido": "Messi",
+      "fechaRegistro": "2023-04-27T01:27:59.631Z"
+    },
+    {
+      "id": 1,
       "nombre": "Fideo",
       "apellido": "Di Maria",
-      "email": "fd@mail.com"
+      "fechaRegistro": "2023-04-27T01:27:59.631Z"
+    },
+    {
+      "nombre": "Guillermo",
+      "apellido": "Valarezo",
+      "id": 6
+    },
+    {
+      "nombre": "Lisette",
+      "apellido": "Naranjo Altamirano",
+      "id": 7,
+      "fechaRegistro": "2023-05-16T23:24:41.536Z"
+    },
+    {
+      "nombre": "Santigo Alonso",
+      "apellido": "Valarezo Naranjo",
+      "id": 8,
+      "fechaRegistro": "2023-05-17T05:18:01.248Z"
     }
   ]
 }

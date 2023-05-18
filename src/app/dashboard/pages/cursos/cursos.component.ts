@@ -36,8 +36,9 @@ export class CursosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cursosService.obtenerCursos().subscribe({
+    this.cursosService.obtenerCursoMateria().subscribe({
       next: (cursos) => {
+        console.log(cursos);
         this.dataSource.data = cursos;
       },
     });

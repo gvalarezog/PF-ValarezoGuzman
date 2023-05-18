@@ -4,11 +4,11 @@ export interface Alumno {
   id: number;
   nombre: string;
   apellido: string;
-  email: string;
+  fechaRegistro: Date;
 }
 
 export interface CrearAlumnoPayload {
   nombre: string;
   apellido: string;
-  email: string;
+  fechaRegistro: Date;
 }

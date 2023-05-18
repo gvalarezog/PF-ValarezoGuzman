@@ -15,7 +15,7 @@
         <mat-label>Curso</mat-label>
         <mat-select name="curso" [formControl]="cursoControl">
           <mat-option *ngFor="let curso of cursos" [value]="curso">
-            {{curso.nombre}}
+            {{curso.subjectId}}
           </mat-option>
         </mat-select>
       </mat-form-field>

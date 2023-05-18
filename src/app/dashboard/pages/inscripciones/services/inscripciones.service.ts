@@ -1,55 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
 import { CrearInscripcionPayload, Inscripcion } from '../models';
-
-const INSCRIPCIONES_MOCKS: Inscripcion[] = [
-  {
-    id: 4,
-    curso: {
-      id: 1,
-      nombre: 'Angular',
-      fecha_fin: new Date(),
-      fecha_inicio: new Date(),
-    },
-    alumnos: [
-      {
-        id: 3,
-        nombre: 'Fideo',
-        apellido: 'Di Maria',
-        email: 'fd@mail.com',
-      },
-      {
-        id: 1,
-        nombre: 'Guillermo',
-        apellido: 'Valarezo',
-        email: 'gv@mail.com',
-      },
-    ],
-  },
-  {
-    id: 2,
-    curso: {
-      id: 2,
-      nombre: 'JavaScript',
-      fecha_fin: new Date(),
-      fecha_inicio: new Date(),
-    },
-    alumnos: [
-      {
-        id: 2,
-        nombre: 'Lio',
-        apellido: 'Messi',
-        email: 'lm@mail.com',
-      },
-      {
-        id: 1,
-        nombre: 'Guillermo',
-        apellido: 'Valarezo',
-        email: 'gv@mail.com',
-      },
-    ],
-  },
-];
+import { HttpClient } from '@angular/common/http';
+import { enviroment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -57,11 +10,19 @@ const INSCRIPCIONES_MOCKS: Inscripcion[] = [
 export class InscripcionesService {
   private inscripciones$ = new BehaviorSubject<Inscripcion[]>([]);
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
+
+  get inscripciones(): Observable<Inscripcion[]> {
+    return this.inscripciones$.asObservable();
+  }
 
   obtenerInscripciones(): Observable<Inscripcion[]> {
-    this.inscripciones$.next(INSCRIPCIONES_MOCKS);
-    return this.inscripciones$.asObservable();
+    return this.httpClient
+      .get<Inscripcion[]>(`${enviroment.apiBaseUrl}/inscriptions`)
+      .pipe(
+        tap((inscripcion) => this.inscripciones$.next(inscripcion)),
+        mergeMap(() => this.inscripciones$.asObservable())
+      );
   }
 
   crearInscripcion(

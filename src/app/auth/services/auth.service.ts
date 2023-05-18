@@ -10,6 +10,7 @@ import {
   throwError,
 } from 'rxjs';
 import { Usuario } from 'src/app/core/models';
+import { enviroment } from 'src/environments/environments';
 
 export interface LoginFormValue {
   email: string;
@@ -20,11 +21,8 @@ export interface LoginFormValue {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiBaseUrl: string;
   private authUser$ = new BehaviorSubject<Usuario | null>(null);
-  constructor(private router: Router, private httpClient: HttpClient) {
-    this.apiBaseUrl = `http://localhost:3000`;
-  }
+  constructor(private router: Router, private httpClient: HttpClient) {}
 
   obtenerUsuarioAutenticado(): Observable<Usuario | null> {
     return this.authUser$.asObservable();
@@ -37,7 +35,7 @@ export class AuthService {
   login(formValue: LoginFormValue): void {
     let loading = true;
     this.httpClient
-      .get<Usuario[]>(`${this.apiBaseUrl}/usuarios`, {
+      .get<Usuario[]>(`${enviroment.apiBaseUrl}/users`, {
         params: {
           ...formValue,
         },
@@ -68,7 +66,7 @@ export class AuthService {
   verificarToken(): Observable<boolean> {
     const token = localStorage.getItem('token');
     return this.httpClient
-      .get<Usuario[]>(`${this.apiBaseUrl}/usuarios?token=${token}`, {
+      .get<Usuario[]>(`${enviroment.apiBaseUrl}/users?token=${token}`, {
         headers: new HttpHeaders({
           Authorization: token || '',
         }),

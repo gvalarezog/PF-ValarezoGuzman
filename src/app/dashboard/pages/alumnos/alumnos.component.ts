@@ -15,21 +15,16 @@ export class AlumnosComponent {
   displayedColumns: string[] = [
     'id',
     'nombreCompleto',
-    'email',
     'ver_detalle',
     'editar',
     'eliminar',
   ];
 
-  // dataSource = new MatTableDataSource(this.alumnos);
   dataSource = new MatTableDataSource<Alumno>();
 
   aplicarFiltros(ev: Event): void {
     const inputValue = (ev.target as HTMLInputElement)?.value;
-    // inputValue = inputValue.trim(); // Remove whitespace
-    // inputValue = inputValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = inputValue?.trim()?.toLocaleLowerCase();
-    console.log(ev);
   }
 
   constructor(
@@ -47,15 +42,14 @@ export class AlumnosComponent {
     const dialog = this.matDialog.open(AbmAlumnosComponent);
     dialog.afterClosed().subscribe((valor) => {
       if (valor) {
-        this.dataSource.data = [
-          ...this.dataSource.data,
-          {
-            id: this.dataSource.data.length + 1,
-            nombre: valor.nombre,
-            apellido: valor.apellido,
-            email: valor.email,
-          },
-        ];
+        this.alumnoService.crearAlumno(valor).subscribe((alumno) => {
+          this.dataSource.data = [
+            ...this.dataSource.data,
+            {
+              ...alumno,
+            },
+          ];
+        });
       }
     });
   }
@@ -67,6 +61,7 @@ export class AlumnosComponent {
   }
 
   eliminarAlumno(alumnoParaEliminar: Alumno): void {
+    this.alumnoService.eliminarAlumno(alumnoParaEliminar.id).subscribe();
     this.dataSource.data = this.dataSource.data.filter(
       (alumnoActual) => alumnoActual.id !== alumnoParaEliminar.id
     );
@@ -80,11 +75,15 @@ export class AlumnosComponent {
     });
     dialog.afterClosed().subscribe((valorDelFormulario) => {
       if (valorDelFormulario) {
-        this.dataSource.data = this.dataSource.data.map((alumnoActual) =>
-          alumnoActual.id === alumnoParaEditar.id
-            ? { ...alumnoActual, ...valorDelFormulario } // { nombre: 'xxxxxx', apellido: 'xxxxx' }
-            : alumnoActual
-        );
+        this.alumnoService
+          .editarAlumno(valorDelFormulario)
+          .subscribe((alumno) => {
+            this.dataSource.data = this.dataSource.data.map((alumnoActual) =>
+              alumnoActual.id === alumno.id
+                ? { ...alumnoActual, ...alumno }
+                : alumnoActual
+            );
+          });
       }
     });
   }

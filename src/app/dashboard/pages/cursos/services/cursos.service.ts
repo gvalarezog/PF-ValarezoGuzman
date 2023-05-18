@@ -1,38 +1,47 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
-import { CrearCursoPayload, Curso } from '../models';
+import { CrearCursoPayload, Curso, CursoMateria } from '../models';
 import { HttpClient } from '@angular/common/http';
+import { enviroment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CursosService {
-  private cursos$ = new BehaviorSubject<Curso[]>([]);
-  private apiBaseUrl: string;
+  private cursoMateria$ = new BehaviorSubject<CursoMateria[]>([]);
+  private curso$ = new BehaviorSubject<Curso[]>([]);
 
-  constructor(private httpClient: HttpClient) {
-    this.apiBaseUrl = `http://localhost:3000`;
+  constructor(private httpClient: HttpClient) {}
+
+  get cursoMateria(): Observable<CursoMateria[]> {
+    return this.cursoMateria$.asObservable();
   }
 
-  get cursos(): Observable<Curso[]> {
-    return this.cursos$.asObservable();
+  obtenerCursos(): Observable<CursoMateria[]> {
+    return this.httpClient
+      .get<CursoMateria[]>(`${enviroment.apiBaseUrl}/courses`)
+      .pipe(
+        tap((cursoMateria) => this.cursoMateria$.next(cursoMateria)),
+        mergeMap(() => this.cursoMateria$.asObservable())
+      );
   }
-
-  obtenerCursos(): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>(`${this.apiBaseUrl}/cursos`).pipe(
-      tap((cursos) => this.cursos$.next(cursos)),
-      mergeMap(() => this.cursos$.asObservable())
-    );
+  obtenerCursoMateria(): Observable<CursoMateria[]> {
+    return this.httpClient
+      .get<CursoMateria[]>(`${enviroment.apiBaseUrl}/courses?_expand=subject`)
+      .pipe(
+        tap((cursoMateria) => this.cursoMateria$.next(cursoMateria)),
+        mergeMap(() => this.cursoMateria$.asObservable())
+      );
   }
 
   crearCurso(payload: CrearCursoPayload): Observable<Curso[]> {
     let loading = true;
-    this.cursos$.pipe(take(1)).subscribe({
-      next: (cursos) => {
-        this.cursos$.next([
-          ...cursos,
+    this.cursoMateria$.pipe(take(1)).subscribe({
+      next: (cursoMateria) => {
+        this.curso$.next([
+          ...cursoMateria,
           {
-            id: cursos.length + 1,
+            id: cursoMateria.length + 1,
             ...payload,
           },
         ]);
@@ -42,34 +51,34 @@ export class CursosService {
       },
       error: () => {},
     });
-    return this.cursos$.asObservable();
+    return this.cursoMateria$.asObservable();
   }
 
   editarCurso(
     cursoId: number,
-    actualizacion: Partial<Curso>
+    actualizacion: Partial<CursoMateria>
   ): Observable<Curso[]> {
-    this.cursos$.pipe(take(1));
-    return this.cursos$.asObservable();
+    this.cursoMateria$.pipe(take(1));
+    return this.cursoMateria$.asObservable();
   }
 
   eliminarCurso(cursoId: number): Observable<Curso[]> {
-    this.cursos$.pipe(take(1)).subscribe({
-      next: (cursos) => {
-        const cursosActualizados = cursos.filter(
+    this.cursoMateria$.pipe(take(1)).subscribe({
+      next: (cursoMateria) => {
+        const cursoMateriaActualizados = cursoMateria.filter(
           (curso) => curso.id !== cursoId
         );
-        this.cursos$.next(cursosActualizados);
+        this.cursoMateria$.next(cursoMateriaActualizados);
       },
       complete: () => {},
       error: () => {},
     });
-    return this.cursos$.asObservable();
+    return this.cursoMateria$.asObservable();
   }
 
-  obtenerCursoPorId(id: number): Observable<Curso | undefined> {
-    return this.cursos$
+  obtenerCursoPorId(id: number): Observable<CursoMateria | undefined> {
+    return this.cursoMateria$
       .asObservable()
-      .pipe(map((cursos) => cursos.find((a) => a.id === id)));
+      .pipe(map((cursoMateria) => cursoMateria.find((a) => a.id === id)));
   }
 }

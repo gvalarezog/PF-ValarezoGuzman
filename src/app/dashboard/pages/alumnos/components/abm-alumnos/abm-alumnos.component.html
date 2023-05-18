@@ -21,16 +21,6 @@
           }}</mat-error>
       </mat-form-field>
     </div>
-
-    <!-- CONTROL DE EMAIL -->
-    <div class="col-12 field">
-      <mat-form-field class="w-full">
-        <mat-label>Apellido</mat-label>
-        <input [formControl]="emailControl" type="text" matInput>
-        <mat-error *ngFor="let error of emailControl.errors | keyvalue">{{ error | controlErrorMessages
-          }}</mat-error>
-      </mat-form-field>
-    </div>
   </form>
 </div>
 
