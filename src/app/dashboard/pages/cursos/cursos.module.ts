@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RouterModule } from '@angular/router';
 import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component';
 import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [CursosComponent, AbmCursosComponent, CursoDetalleComponent],
@@ -28,6 +29,7 @@ import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatSelectModule,
     MatNativeDateModule,
     RouterModule.forChild([
       {

@@ -34,19 +34,19 @@ export class CursoDetalleComponent implements OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((cursoMateria) => (this.cursoMateria = cursoMateria));
 
-    this.inscripcionesService
-      .obtenerInscripcionesPorCursoId(
-        parseInt(this.activatedRoute.snapshot.params['id'])
-      )
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((inscripcion) => {
-        if (inscripcion.length > 0) {
-          this.existeInscripcion = true;
-          this.dataSourceAlumnos.data = inscripcion[0].alumnos || [];
-        } else {
-          this.existeInscripcion = false;
-        }
-      });
+    // this.inscripcionesService
+    //   .obtenerInscripcionesPorCursoId(
+    //     parseInt(this.activatedRoute.snapshot.params['id'])
+    //   )
+    //   .pipe(takeUntil(this.destroyed$))
+    //   .subscribe((inscripcion) => {
+    //     if (inscripcion.length > 0) {
+    //       this.existeInscripcion = true;
+    //       this.dataSourceAlumnos.data = inscripcion[0].alumnos || [];
+    //     } else {
+    //       this.existeInscripcion = false;
+    //     }
+    //   });
   }
 
   ngOnDestroy(): void {

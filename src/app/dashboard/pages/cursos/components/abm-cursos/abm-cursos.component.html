@@ -4,13 +4,17 @@
     <!-- CONTROL DE NOMBRE -->
 
     <div class="col-12 field">
-      <mat-form-field class="w-full">
-        <mat-label>Nombre</mat-label>
-        <input [formControl]="nombreControl" type="text" matInput>
-        <mat-error *ngFor="let error of nombreControl.errors | keyvalue">{{ error | controlErrorMessages }}</mat-error>
+      <mat-form-field appearance="fill">
+        <mat-label>Curso</mat-label>
+        <mat-select name="materia" [(value)]="idSelected" [formControl]="idSubjectControl">
+          <mat-option *ngFor="let materia of materias" [value]="materia.id">
+            {{materia.nombre}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-6">
+
+    <div class=" col-6">
       <mat-form-field class="w-full">
         <mat-label>Fecha de inicio</mat-label>
         <input [formControl]="fechaInicioControl" matInput [matDatepicker]="fechaInicioPicker">
@@ -28,10 +32,9 @@
         <mat-datepicker #fechaFinPicker></mat-datepicker>
       </mat-form-field>
     </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button (click)="guardar()" mat-button>Guardar</button>
+    </div>
   </form>
-</div>
-
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button (click)="guardar()" mat-button>Guardar</button>
 </div>

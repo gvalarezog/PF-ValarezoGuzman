@@ -36,9 +36,8 @@ export class CursosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cursosService.obtenerCursoMateria().subscribe({
+    this.cursosService.obtenerCursosMateria().subscribe({
       next: (cursos) => {
-        console.log(cursos);
         this.dataSource.data = cursos;
       },
     });
@@ -48,7 +47,9 @@ export class CursosComponent implements OnInit {
     const dialog = this.matDialog.open(AbmCursosComponent);
     dialog.afterClosed().subscribe((formValue) => {
       if (formValue) {
-        this.cursosService.crearCurso(formValue);
+        this.cursosService.crearCurso(formValue).subscribe((cursos) => {
+          this.dataSource.data = cursos;
+        });
       }
     });
   }
@@ -61,11 +62,11 @@ export class CursosComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((valorDelFormulario) => {
       if (valorDelFormulario) {
-        this.dataSource.data = this.dataSource.data.map((cursoActual) =>
-          cursoActual.id === cursoParaEditar.id
-            ? { ...cursoActual, ...valorDelFormulario }
-            : cursoActual
-        );
+        this.cursosService
+          .editarCurso(cursoParaEditar.id, valorDelFormulario)
+          .subscribe((cursos) => {
+            this.dataSource.data = cursos;
+          });
       }
     });
   }

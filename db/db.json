@@ -21,22 +21,22 @@
   ],
   "courses": [
     {
-      "id": 1,
+      "subjectId": 2,
+      "fecha_inicio": "2023-04-27T01:27:59.631Z",
+      "fecha_fin": "2023-04-27T01:27:59.631Z",
+      "id": 1
+    },
+    {
+      "subjectId": 2,
+      "fecha_inicio": "2023-04-27T01:27:59.631Z",
+      "fecha_fin": "2023-04-27T01:27:59.631Z",
+      "id": 2
+    },
+    {
       "subjectId": 1,
+      "fecha_inicio": "2023-04-27T01:27:59.631Z",
       "fecha_fin": "2023-04-27T01:27:59.631Z",
-      "fecha_inicio": "2023-04-27T01:27:59.631Z"
-    },
-    {
-      "id": 2,
-      "subjectId": 2,
-      "fecha_fin": "2023-04-27T01:27:59.631Z",
-      "fecha_inicio": "2023-04-27T01:27:59.631Z"
-    },
-    {
-      "id": 3,
-      "subjectId": 2,
-      "fecha_fin": "2023-04-27T01:27:59.631Z",
-      "fecha_inicio": "2023-04-27T01:27:59.631Z"
+      "id": 3
     }
   ],
   "subjects": [
@@ -51,7 +51,7 @@
     },
     {
       "id": 3,
-      "nombre": "Desarrollo Javascript"
+      "nombre": "Materia Nueva"
     }
   ],
   "inscriptions": [
