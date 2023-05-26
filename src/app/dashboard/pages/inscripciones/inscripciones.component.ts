@@ -5,6 +5,14 @@ import { AbmInscripcionesComponent } from './components/abm-inscripciones/abm-in
 import { InscripcionesService } from './services/inscripciones.service';
 import { Curso } from '../cursos/models';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { InscripcionesActions } from './store/inscripciones.actions';
+import { Observable } from 'rxjs';
+import { State } from './store/inscripciones.reducer';
+import { selectInscripcionesState } from './store/inscripciones.selectors';
+import { Subject } from '../materias/models';
+import { Alumno } from '../alumnos/models';
 
 @Component({
   selector: 'app-inscripciones',
@@ -12,33 +20,64 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./inscripciones.component.scss'],
 })
 export class InscripcionesComponent implements OnInit {
+  state$: Observable<State>;
   dataSourceIncripciones = new MatTableDataSource();
   displayedColumns = ['id', 'curso', 'cantidad', 'detalle'];
   curso: Curso | undefined;
 
   constructor(
-    private inscripcionesServicio: InscripcionesService,
+    // private inscripcionesServicio: InscripcionesService,
+    private store: Store,
     private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.state$ = this.store.select(selectInscripcionesState);
+  }
 
   ngOnInit(): void {
-    this.inscripcionesServicio.obtenerInscripciones().subscribe({
-      next: (incripciones) => {
-        this.dataSourceIncripciones.data = incripciones;
+    this.store.dispatch(InscripcionesActions.loadInscripciones());
+    this.state$.subscribe({
+      next: (stateIncripciones) => {
+        const cursos: {
+          course: Curso;
+          subject: Subject;
+          alumnos: Alumno[];
+        }[] = [];
+        stateIncripciones.inscripciones.forEach((inscripcion) => {
+          const existeCurso = cursos.some(
+            (curso) => curso.course.id === inscripcion.course.id
+          );
+          if (!existeCurso) {
+            const alumnos = stateIncripciones.inscripciones
+              .filter((insc) => insc.course.id === inscripcion.course.id)
+              .map((insc) => insc.student);
+
+            cursos.push({
+              course: inscripcion.course,
+              subject: inscripcion.subject,
+              alumnos: alumnos,
+            });
+          }
+        });
+
+        this.dataSourceIncripciones.data = cursos;
       },
     });
   }
 
   crearInscripcion(): void {
-    const dialog = this.dialog.open(AbmInscripcionesComponent);
-    dialog.afterClosed().subscribe((formValue) => {
-      if (formValue) {
-        this.inscripcionesServicio.crearInscripcion(formValue);
-      }
-    });
+    this.dialog.open(AbmInscripcionesComponent);
   }
+
+  // crearInscripcion(): void {
+  //   const dialog = this.dialog.open(AbmInscripcionesComponent);
+  //   dialog.afterClosed().subscribe((formValue) => {
+  //     if (formValue) {
+  //       this.inscripcionesServicio.crearInscripcion(formValue);
+  //     }
+  //   });
+  // }
 
   irAlDetalle(id: number): void {
     this.router.navigate([id], {

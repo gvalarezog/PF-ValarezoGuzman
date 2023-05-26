@@ -8,6 +8,7 @@ import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -20,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
     DirectivesModule,
     RouterModule,
     MatListModule,
+    SharedModule,
     RouterModule.forChild([
       {
         // http://localhost:XXXX/dashboard/estudiantes

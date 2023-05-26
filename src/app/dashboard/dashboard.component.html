@@ -3,7 +3,7 @@
 <mat-drawer-container class="example-container">
   <mat-drawer [opened]="true" style="width: 50;" #drawer class="example-sidenav" mode="side">
     <img width="50" height="50" src="../../assets/img/avatar.png">
-    <p>{{ (authUser$ | async)?.nombre }}</p>
+    <p>{{ (authUser$ | async)?.nombre }} {{ (authUser$ | async)?.apellido }}</p>
     <p>{{ (authUser$ | async)?.email }}</p>
 
     <mat-nav-list>
@@ -23,14 +23,9 @@
         (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Sistema de Administración de Cursos</span>
+      <span>Sistema de Administración de Cursos {{componentName | nombreComponente}}</span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>book</mat-icon>
-      </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>share</mat-icon>
-      </button>
+      <span class="example-icon"> {{ (authUser$ | async)?.nombre }} {{ (authUser$ | async)?.apellido }}</span>
     </mat-toolbar>
     <!-- Mis paginas -->
     <main>

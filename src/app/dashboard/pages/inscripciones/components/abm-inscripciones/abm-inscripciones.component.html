@@ -1,3 +1,4 @@
+<h3 mat-dialog-title>CREAR INSCRIPCION</h3>
 <form [formGroup]="inscripcionForm">
   <mat-accordion class="example-headers-align">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
@@ -13,9 +14,9 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Curso</mat-label>
-        <mat-select name="curso" [formControl]="cursoControl">
-          <mat-option *ngFor="let curso of cursos" [value]="curso">
-            {{curso.subjectId}}
+        <mat-select name="curso" [formControl]="selectedCourseControl">
+          <mat-option *ngFor="let curso of cursosMateria" [value]="curso">
+            Id: {{curso?.id}} - {{curso?.subject?.nombre}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -47,7 +48,7 @@
       </mat-form-field>
       <mat-action-row>
         <button mat-button color="warn" (click)="prevStep()">Anterior</button>
-        <button mat-button color="primary" (click)="guardarIncripcion()">Guardar</button>
+        <button mat-button color="primary" (click)="onSave()">Guardar</button>
       </mat-action-row>
     </mat-expansion-panel>
 

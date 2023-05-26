@@ -15,6 +15,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InscripcionesDetalleComponent } from './components/inscripciones-detalle/inscripciones-detalle.component';
 import { RouterModule } from '@angular/router';
+import { InscripcionesRoutingModule } from './inscripciones-routing.module';
+import { EffectsModule } from '@ngrx/effects';
+import { InscripcionesEffects } from './store/inscripciones.effects';
+import { StoreModule } from '@ngrx/store';
+import { inscripcionesFeature } from './store/inscripciones.reducer';
 
 @NgModule({
   declarations: [
@@ -36,18 +41,21 @@ import { RouterModule } from '@angular/router';
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule.forChild([
-      {
-        // /dashboard/cursos
-        path: '',
-        component: InscripcionesComponent,
-      },
-      {
-        // /dashboard/cursos
-        path: ':id',
-        component: InscripcionesDetalleComponent,
-      },
-    ]),
+    InscripcionesRoutingModule,
+    StoreModule.forFeature(inscripcionesFeature),
+    EffectsModule.forFeature([InscripcionesEffects]),
+    // RouterModule.forChild([
+    //   {
+    //     // /dashboard/cursos
+    //     path: '',
+    //     component: InscripcionesComponent,
+    //   },
+    //   {
+    //     // /dashboard/cursos
+    //     path: ':id',
+    //     component: InscripcionesDetalleComponent,
+    //   },
+    // ]),
   ],
 })
 export class InscripcionesModule {}

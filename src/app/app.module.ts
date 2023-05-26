@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { actionReducerMap } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     StoreModule.forRoot(actionReducerMap, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

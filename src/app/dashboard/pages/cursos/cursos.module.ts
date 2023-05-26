@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component';
 import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.component';
 import { MatSelectModule } from '@angular/material/select';
+import { InscripcionesModule } from '../inscripciones/inscripciones.module';
 
 @NgModule({
   declarations: [CursosComponent, AbmCursosComponent, CursoDetalleComponent],

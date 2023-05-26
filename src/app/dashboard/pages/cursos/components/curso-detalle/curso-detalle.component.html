@@ -14,13 +14,13 @@
 
   <ng-container matColumnDef="nombreCompleto">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element | nombreCompleto}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.student.nombre}} {{element.student.apellido}}</td>
   </ng-container>
 
   <ng-container matColumnDef="anular">
     <th mat-header-cell *matHeaderCellDef>Anular Registro</th>
-    <td mat-cell *matCellDef="let alumno">
-      <button mat-icon-button (click)="anularInscripcionAlumno(alumno.id)">
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="anularInscripcionPorId(element.id)">
         <mat-icon>playlist_remove</mat-icon>
       </button>
     </td>

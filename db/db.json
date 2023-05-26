@@ -22,21 +22,21 @@
   "courses": [
     {
       "subjectId": 2,
-      "fecha_inicio": "2023-04-27T01:27:59.631Z",
-      "fecha_fin": "2023-04-27T01:27:59.631Z",
+      "fecha_inicio": "2023-04-30T05:00:00.000Z",
+      "fecha_fin": "2023-05-31T05:00:00.000Z",
       "id": 1
-    },
-    {
-      "subjectId": 2,
-      "fecha_inicio": "2023-04-27T01:27:59.631Z",
-      "fecha_fin": "2023-04-27T01:27:59.631Z",
-      "id": 2
     },
     {
       "subjectId": 1,
       "fecha_inicio": "2023-04-27T01:27:59.631Z",
       "fecha_fin": "2023-04-27T01:27:59.631Z",
       "id": 3
+    },
+    {
+      "subjectId": 3,
+      "fecha_inicio": "2023-05-01T05:00:00.000Z",
+      "fecha_fin": "2023-06-30T05:00:00.000Z",
+      "id": 4
     }
   ],
   "subjects": [
@@ -56,28 +56,28 @@
   ],
   "inscriptions": [
     {
-      "id": 2,
+      "subjectId": 1,
+      "studentId": 8,
+      "courseId": 3,
+      "id": 7
+    },
+    {
       "subjectId": 2,
-      "studentId": 1,
-      "courseId": 2
+      "studentId": 7,
+      "courseId": 1,
+      "id": 13
     },
     {
       "subjectId": 1,
       "studentId": 3,
-      "courseId": 1,
-      "id": 3
-    },
-    {
-      "subjectId": 1,
-      "studentId": 3,
-      "courseId": 1,
-      "id": 4
+      "courseId": 3,
+      "id": 14
     },
     {
       "subjectId": 2,
-      "studentId": 1,
-      "courseId": 2,
-      "id": 5
+      "studentId": 6,
+      "courseId": 1,
+      "id": 15
     }
   ],
   "students": [
@@ -85,12 +85,6 @@
       "id": 3,
       "nombre": "Lio",
       "apellido": "Messi",
-      "fechaRegistro": "2023-04-27T01:27:59.631Z"
-    },
-    {
-      "id": 1,
-      "nombre": "Fideo",
-      "apellido": "Di Maria",
       "fechaRegistro": "2023-04-27T01:27:59.631Z"
     },
     {

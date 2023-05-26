@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CursosService } from '../../../cursos/services/cursos.service';
 import { AlumnosService } from '../../../alumnos/services/alumnos.service';
@@ -7,18 +7,20 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { Inscripcion, CrearInscripcionPayload } from '../../models';
-import { Curso } from '../../../cursos/models/index';
+import { CreateInscripcionData, Inscripcion } from '../../models';
+import { Curso, CursoMateria } from '../../../cursos/models/index';
+import { Store } from '@ngrx/store';
+import { InscripcionesActions } from '../../store/inscripciones.actions';
 
 @Component({
   selector: 'app-abm-inscripciones',
   templateUrl: './abm-inscripciones.component.html',
   styleUrls: ['./abm-inscripciones.component.scss'],
 })
-export class AbmInscripcionesComponent implements OnInit {
+export class AbmInscripcionesComponent implements OnInit, OnDestroy {
   // dataSourceAlumnos = new MatTableDataSource();
-  cursos?: Curso[];
-  alumnos?: Alumno[];
+  cursosMateria: CursoMateria[] = [];
+  alumnos: Alumno[] = [];
   // cursoSelected: Curso | any;
   panelOpenState = true;
   // selected = 'Escoja el curso';
@@ -30,24 +32,40 @@ export class AbmInscripcionesComponent implements OnInit {
   // dataSource = new MatTableDataSource<Alumno>();
   // selection = new SelectionModel<Alumno>(true, []);
 
-  cursoControl = new FormControl();
-  alumnoControl = new FormControl();
-  cantidadAlumnosControl = new FormControl();
+  selectedCourseControl = new FormControl<Curso | null>(null);
+
+  courseIdControl = new FormControl();
+  alumnoControl = new FormControl<Alumno[] | null>(null);
+  subjectIdControl = new FormControl();
 
   inscripcionForm = new FormGroup({
-    curso: this.cursoControl,
+    courseId: this.courseIdControl,
     alumnos: this.alumnoControl,
-    cantidadAlumnos: this.cantidadAlumnosControl,
+    subjectId: this.subjectIdControl,
   });
+
+  destroyed$ = new Subject<void>();
 
   constructor(
     private cursosServicio: CursosService,
     private alumnoService: AlumnosService,
-    private dialogRef: MatDialogRef<AbmInscripcionesComponent>
+    private dialogRef: MatDialogRef<AbmInscripcionesComponent>,
+    private store: Store
   ) {
-    // this.selectedValue = '';
-    // this.selectedAlumno = '';
-    // this.inscripcionPayload = new CrearInscripcionPayload();
+    this.selectedCourseControl.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (curso) => {
+          if (curso) {
+            this.subjectIdControl.setValue(curso.subjectId);
+            this.courseIdControl.setValue(curso.id);
+          }
+        },
+      });
+  }
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   setStep(index: number) {
@@ -67,9 +85,9 @@ export class AbmInscripcionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cursosServicio.obtenerCursos().subscribe({
+    this.cursosServicio.obtenerCursosMateria().subscribe({
       next: (cursos) => {
-        this.cursos = cursos;
+        this.cursosMateria = cursos;
       },
     });
     this.alumnoService.obtenerAlumnos().subscribe({
@@ -77,5 +95,14 @@ export class AbmInscripcionesComponent implements OnInit {
         this.alumnos = alumnos;
       },
     });
+  }
+
+  onSave(): void {
+    this.store.dispatch(
+      InscripcionesActions.createInscripcion({
+        data: this.inscripcionForm.value as CreateInscripcionData,
+      })
+    );
+    this.dialogRef.close();
   }
 }
