@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { SharedModule } from '../shared/shared.module';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -43,6 +44,7 @@ import { SharedModule } from '../shared/shared.module';
       },
       {
         path: 'usuarios',
+        canActivate: [AdminGuard],
         loadChildren: () =>
           import('./pages/usuarios/usuarios.module').then(
             (m) => m.UsuariosModule

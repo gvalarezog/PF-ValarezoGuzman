@@ -7,8 +7,10 @@
     <p>{{ (authUser$ | async)?.email }}</p>
 
     <mat-nav-list>
-      <a [routerLink]="link.path" mat-list-item href="..." *ngFor="let link of links"><mat-icon
-          *ngIf="link.icon">{{link.icon}}</mat-icon> {{ link.title }}</a>
+      <a [routerLink]="link.path" mat-list-item href="..." *ngFor="let link of linksFiltrados">
+        <mat-icon *ngIf="link.icon">{{link.icon}}</mat-icon> {{
+        link.title
+        }} </a>
       <br>
       <br>
       <a mat-list-item (click)="logout()"><mat-icon>logout</mat-icon> Cerrar Sesión</a>

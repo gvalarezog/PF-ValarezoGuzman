@@ -5,6 +5,9 @@ import { AbmAlumnosComponent } from './components/abm-alumnos/abm-alumnos.compon
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from './services/alumnos.service';
 import { Alumno } from './models';
+import { Usuario } from 'src/app/core/models';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-alumnos',
@@ -12,6 +15,7 @@ import { Alumno } from './models';
   styleUrls: ['./alumnos.component.scss'],
 })
 export class AlumnosComponent {
+  authUser$: Observable<Usuario | null>;
   displayedColumns: string[] = [
     'id',
     'nombreCompleto',
@@ -31,8 +35,10 @@ export class AlumnosComponent {
     private matDialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private alumnoService: AlumnosService
+    private alumnoService: AlumnosService,
+    private authService: AuthService
   ) {
+    this.authUser$ = this.authService.obtenerUsuarioAutenticado();
     this.alumnoService.obtenerAlumnos().subscribe((alumnos) => {
       this.dataSource.data = alumnos;
     });

@@ -14,6 +14,8 @@ import { selectInscripcionesState } from './store/inscripciones.selectors';
 import { Subject } from '../materias/models';
 import { Alumno } from '../alumnos/models';
 import { Inscripcion } from './models';
+import { Usuario } from 'src/app/core/models';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-inscripciones',
@@ -22,6 +24,7 @@ import { Inscripcion } from './models';
 })
 export class InscripcionesComponent implements OnInit {
   state$: Observable<State>;
+  authUser$: Observable<Usuario | null>;
   dataSourceIncripciones = new MatTableDataSource();
   displayedColumns = [
     'id',
@@ -38,8 +41,10 @@ export class InscripcionesComponent implements OnInit {
     private store: Store,
     private dialog: MatDialog,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {
+    this.authUser$ = this.authService.obtenerUsuarioAutenticado();
     this.state$ = this.store.select(selectInscripcionesState);
   }
 

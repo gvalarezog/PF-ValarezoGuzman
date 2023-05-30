@@ -1,7 +1,7 @@
 import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
-import links from './nav-items';
+import links, { NavItem } from './nav-items';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   showFiller = false;
   authUser$: Observable<Usuario | null>;
   links = links;
+  linksFiltrados: NavItem[] = [];
   // snapshot: ActivatedRouteSnapshot | null;
   componentName: string;
 
@@ -30,6 +31,12 @@ export class DashboardComponent implements OnInit {
   ) {
     this.authUser$ = this.authService.obtenerUsuarioAutenticado();
     this.componentName = '';
+    let userRol;
+    this.authUser$.pipe(map((u) => u?.role)).subscribe((rol) => {
+      // Aquí tienes acceso a la propiedad 'rol' del usuario
+      userRol = rol;
+    });
+    this.linksFiltrados = this.verLinksPorRol(userRol, links);
   }
   ngOnInit(): void {
     this.router.events
@@ -49,6 +56,17 @@ export class DashboardComponent implements OnInit {
           this.componentName = componentName;
         }
       });
+  }
+
+  verLinksPorRol(rol: any, links: NavItem[]): NavItem[] {
+    switch (rol) {
+      case 'admin':
+        return links;
+      case 'user':
+        return links.filter((link) => link.role === 'user');
+      default:
+        return [];
+    }
   }
 
   logout(): void {

@@ -5,6 +5,9 @@ import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component
 import { MatDialog } from '@angular/material/dialog';
 import { Curso } from './models';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Usuario } from 'src/app/core/models';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-cursos',
@@ -12,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./cursos.component.scss'],
 })
 export class CursosComponent implements OnInit {
+  authUser$: Observable<Usuario | null>;
   dataSource = new MatTableDataSource<Curso>();
 
   displayedColumns = [
@@ -28,8 +32,10 @@ export class CursosComponent implements OnInit {
     private cursosService: CursosService,
     private matDialog: MatDialog,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {
+    this.authUser$ = this.authService.obtenerUsuarioAutenticado();
     this.cursosService.obtenerCursos().subscribe((cursos) => {
       this.dataSource.data = cursos;
     });

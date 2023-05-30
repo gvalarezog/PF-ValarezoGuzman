@@ -41,18 +41,19 @@
     </ng-container>
 
     <ng-container matColumnDef="editar">
-      <th mat-header-cell *matHeaderCellDef>Ver</th>
+      <th mat-header-cell *matHeaderCellDef><span *ngIf="(authUser$ | async)?.role==='admin'">Editar</span></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="editarInscripcion(element)">
+        <button *ngIf="(authUser$ | async)?.role==='admin'" mat-icon-button (click)="editarInscripcion(element)">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="eliminar">
-      <th mat-header-cell *matHeaderCellDef>Ver</th>
+      <th mat-header-cell *matHeaderCellDef><span *ngIf="(authUser$ | async)?.role==='admin'">Eliminar</span></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="eliminarInscripcion(element.course.id)">
+        <button *ngIf="(authUser$ | async)?.role==='admin'" mat-icon-button
+          (click)="eliminarInscripcion(element.course.id)">
           <mat-icon>close</mat-icon>
         </button>
       </td>

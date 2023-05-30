@@ -15,7 +15,7 @@
       "email": "lperez@mail.com",
       "password": "1234",
       "token": "nmdsgfjhuMDKSAFJASDK327SJDKANjsadnsah",
-      "role": "user",
+      "role": "admin",
       "id": 4
     },
     {
@@ -102,12 +102,6 @@
       "courseId": 3,
       "studentId": 6,
       "id": 43
-    },
-    {
-      "subjectId": 1,
-      "courseId": 3,
-      "studentId": 7,
-      "id": 44
     },
     {
       "subjectId": 3,
