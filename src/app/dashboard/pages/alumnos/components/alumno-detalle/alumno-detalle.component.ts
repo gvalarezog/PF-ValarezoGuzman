@@ -50,7 +50,6 @@ export class AlumnoDetalleComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    console.log(parseInt(this.activatedRoute.snapshot.params['id']));
     this.alumnosService
       .obtenerAlumnoPorId(parseInt(this.activatedRoute.snapshot.params['id']))
       .pipe(takeUntil(this.destroyed$))

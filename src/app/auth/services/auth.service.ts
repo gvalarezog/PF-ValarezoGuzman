@@ -96,8 +96,7 @@ export class AuthService {
           return !!usuarioAutenticado;
         }),
         catchError((err) => {
-          // alert('Falla en la conexion');
-          // return throwError(() => err);
+          alert('Falla en la conexion');
           return of(false);
         })
       );

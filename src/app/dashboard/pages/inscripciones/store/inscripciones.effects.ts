@@ -73,6 +73,24 @@ export class InscripcionesEffects {
     );
   });
 
+  deleteInscripcionPorCurso$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscripcionesActions.deleteInscripcionporcurso),
+      concatMap((action) =>
+        this.inscripcionesService.eliminarInscripcionCursoPorId(action.id).pipe(
+          map((data) =>
+            InscripcionesActions.deleteInscripcionporcursoSuccess({
+              data: action.id,
+            })
+          ),
+          catchError((error) =>
+            of(InscripcionesActions.deleteInscripcionporcursoFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private inscripcionesService: InscripcionesService

@@ -8,6 +8,8 @@ import {
   from,
   map,
   mergeMap,
+  of,
+  switchMap,
   take,
   tap,
 } from 'rxjs';
@@ -102,28 +104,23 @@ export class InscripcionesService {
     );
   }
 
-  // obtenerInscripcionesPorCursoId(idCurso: number): Observable<Inscripcion[]> {
-  //   this.obtenerInscripciones()
-  //     .pipe(take(1))
-  //     .subscribe({
-  //       next: (inscripciones) => {
-  //         const inscripcionActualizada = inscripciones.filter(
-  //           (inscripcion) => inscripcion.curso.id === idCurso
-  //         );
-  //         this.inscripciones$.next(inscripcionActualizada);
-  //       },
-  //     });
-  //   return this.inscripciones$.asObservable();
-  // }
-  // anularInscripcionAlumno(idAlumno: number): Observable<Inscripcion[]> {
-  //   this.inscripciones$.asObservable().subscribe({
-  //     next: (inscripcion) => {
-  //       inscripcion[0].alumnos = inscripcion[0].alumnos.filter(
-  //         (alumno) => alumno.id !== idAlumno
-  //       );
-  //       this.inscripciones$.next(inscripcion);
-  //     },
-  //   });
-  //   return this.inscripciones$.asObservable();
-  // }
+  eliminarInscripcionCursoPorId(id: number): Observable<unknown> {
+    return this.httpClient
+      .get<Inscripcion[]>(
+        `${enviroment.apiBaseUrl}/inscriptions?courseId=${id}`
+      )
+      .pipe(
+        switchMap((inscripciones) => {
+          const ids = inscripciones.map((inscripcion) => inscripcion.id);
+          const deleteRequests = ids.map((inscripcionId, index) =>
+            this.httpClient
+              .delete(`${enviroment.apiBaseUrl}/inscriptions/${inscripcionId}`)
+              .pipe(
+                delay(index * 750) // Ajusta el tiempo de retraso aquí (en milisegundos)
+              )
+          );
+          return forkJoin(deleteRequests);
+        })
+      );
+  }
 }

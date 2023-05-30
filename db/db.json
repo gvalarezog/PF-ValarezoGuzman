@@ -17,6 +17,24 @@
       "token": "nmdsgfjhuMDKSAFJASDK327SJDKANjsadnsah",
       "role": "user",
       "id": 4
+    },
+    {
+      "nombre": "Guillermo",
+      "apellido": "Valarezo G",
+      "email": "gvg@mail.com",
+      "role": "user",
+      "password": "123",
+      "token": "XGuPmbNeu9DdT3hGOvQ7",
+      "id": 5
+    },
+    {
+      "nombre": "Li",
+      "apellido": "Na",
+      "email": "lna@mail.com",
+      "role": "user",
+      "password": "12345678",
+      "token": "TVdWaD0uliIR05P1ho3K",
+      "id": 6
     }
   ],
   "courses": [
@@ -35,7 +53,7 @@
     {
       "subjectId": 3,
       "fecha_inicio": "2023-05-01T05:00:00.000Z",
-      "fecha_fin": "2023-06-30T05:00:00.000Z",
+      "fecha_fin": "2023-05-31T05:00:00.000Z",
       "id": 4
     }
   ],
@@ -57,27 +75,75 @@
   "inscriptions": [
     {
       "subjectId": 1,
-      "studentId": 8,
+      "studentId": 3,
       "courseId": 3,
-      "id": 7
-    },
-    {
-      "subjectId": 2,
-      "studentId": 7,
-      "courseId": 1,
-      "id": 13
+      "id": 21
     },
     {
       "subjectId": 1,
-      "studentId": 3,
+      "studentId": 8,
       "courseId": 3,
-      "id": 14
+      "id": 22
+    },
+    {
+      "subjectId": 2,
+      "courseId": 1,
+      "studentId": 3,
+      "id": 37
+    },
+    {
+      "subjectId": 2,
+      "courseId": 1,
+      "studentId": 7,
+      "id": 38
+    },
+    {
+      "subjectId": 1,
+      "courseId": 3,
+      "studentId": 6,
+      "id": 43
+    },
+    {
+      "subjectId": 1,
+      "courseId": 3,
+      "studentId": 7,
+      "id": 44
+    },
+    {
+      "subjectId": 3,
+      "studentId": 3,
+      "courseId": 4,
+      "id": 45
+    },
+    {
+      "subjectId": 3,
+      "studentId": 6,
+      "courseId": 4,
+      "id": 46
+    },
+    {
+      "subjectId": 3,
+      "studentId": 8,
+      "courseId": 4,
+      "id": 47
+    },
+    {
+      "subjectId": 3,
+      "studentId": 7,
+      "courseId": 4,
+      "id": 48
     },
     {
       "subjectId": 2,
       "studentId": 6,
       "courseId": 1,
-      "id": 15
+      "id": 49
+    },
+    {
+      "subjectId": 2,
+      "studentId": 8,
+      "courseId": 1,
+      "id": 50
     }
   ],
   "students": [

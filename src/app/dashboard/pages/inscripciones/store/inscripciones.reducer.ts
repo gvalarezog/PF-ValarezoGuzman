@@ -1,7 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { InscripcionesActions } from './inscripciones.actions';
 import { InscripcionCompleta } from '../models';
-import { Inscripcion } from '../models/index';
 
 export const inscripcionesFeatureKey = 'inscripciones';
 
@@ -99,6 +98,31 @@ export const reducer = createReducer(
   }),
 
   on(InscripcionesActions.deleteInscripcionFailure, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error,
+    };
+  }),
+
+  on(InscripcionesActions.deleteInscripcionporcurso, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(InscripcionesActions.deleteInscripcionporcursoSuccess, (state, action) => {
+    return {
+      ...state,
+      inscripciones: state.inscripciones.filter(
+        (i) => i.courseId !== action.data
+      ),
+      loading: false,
+    };
+  }),
+
+  on(InscripcionesActions.deleteInscripcionporcursoFailure, (state, action) => {
     return {
       ...state,
       loading: false,

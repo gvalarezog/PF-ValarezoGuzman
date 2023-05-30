@@ -8,7 +8,7 @@ const links: NavItem[] = [
   {
     path: 'alumnos',
     title: 'Alumnos',
-    icon: 'person',
+    icon: 'school',
   },
   {
     path: 'cursos',
@@ -19,6 +19,11 @@ const links: NavItem[] = [
     path: 'inscripciones',
     title: 'Incripciones',
     icon: 'auto_stories',
+  },
+  {
+    path: 'usuarios',
+    title: 'Usuarios',
+    icon: 'person',
   },
 ];
 

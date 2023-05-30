@@ -41,6 +41,13 @@ import { SharedModule } from '../shared/shared.module';
             (m) => m.InscripcionesModule
           ),
       },
+      {
+        path: 'usuarios',
+        loadChildren: () =>
+          import('./pages/usuarios/usuarios.module').then(
+            (m) => m.UsuariosModule
+          ),
+      },
     ]),
   ],
   exports: [DashboardComponent],

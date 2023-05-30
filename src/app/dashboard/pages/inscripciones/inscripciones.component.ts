@@ -13,6 +13,7 @@ import { State } from './store/inscripciones.reducer';
 import { selectInscripcionesState } from './store/inscripciones.selectors';
 import { Subject } from '../materias/models';
 import { Alumno } from '../alumnos/models';
+import { Inscripcion } from './models';
 
 @Component({
   selector: 'app-inscripciones',
@@ -22,7 +23,14 @@ import { Alumno } from '../alumnos/models';
 export class InscripcionesComponent implements OnInit {
   state$: Observable<State>;
   dataSourceIncripciones = new MatTableDataSource();
-  displayedColumns = ['id', 'curso', 'cantidad', 'detalle'];
+  displayedColumns = [
+    'id',
+    'curso',
+    'cantidad',
+    'detalle',
+    'editar',
+    'eliminar',
+  ];
   curso: Curso | undefined;
 
   constructor(
@@ -70,18 +78,25 @@ export class InscripcionesComponent implements OnInit {
     this.dialog.open(AbmInscripcionesComponent);
   }
 
-  // crearInscripcion(): void {
-  //   const dialog = this.dialog.open(AbmInscripcionesComponent);
-  //   dialog.afterClosed().subscribe((formValue) => {
-  //     if (formValue) {
-  //       this.inscripcionesServicio.crearInscripcion(formValue);
-  //     }
-  //   });
-  // }
-
   irAlDetalle(id: number): void {
     this.router.navigate([id], {
       relativeTo: this.activatedRoute,
+    });
+  }
+
+  eliminarInscripcion(id: number): void {
+    if (confirm('Está seguro?')) {
+      this.store.dispatch(
+        InscripcionesActions.deleteInscripcionporcurso({ id })
+      );
+    }
+  }
+
+  editarInscripcion(inscripcion: Inscripcion): void {
+    this.dialog.open(AbmInscripcionesComponent, {
+      data: {
+        inscripcion,
+      },
     });
   }
 }

@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  forkJoin,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Alumno, CrearAlumnoPayload } from '../models';
 import { enviroment } from 'src/environments/environments';
+import {
+  Inscripcion,
+  InscripcionEstudiantes,
+} from '../../inscripciones/models';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +43,48 @@ export class AlumnosService {
     return this.httpClient.get<Alumno>(
       `${enviroment.apiBaseUrl}/students/${id}`
     );
+  }
+
+  obtenerAlumnosDisponiblesPorCursoId(idCurso: number): Observable<Alumno[]> {
+    // Obtener todos los estudiantes
+    const estudiantes$: Observable<Alumno[]> = this.httpClient.get<Alumno[]>(
+      `${enviroment.apiBaseUrl}/students`
+    );
+
+    // Obtener los estudiantes inscritos en el curso
+    const inscripciones$: Observable<Inscripcion[]> = this.httpClient.get<
+      Inscripcion[]
+    >(`${enviroment.apiBaseUrl}/inscriptions?courseId=${idCurso}`);
+
+    // Combinar las llamadas usando forkJoin
+    return forkJoin([estudiantes$, inscripciones$]).pipe(
+      switchMap(([estudiantes, inscripciones]) => {
+        // Obtener los IDs de los estudiantes inscritos en el curso
+        const estudiantesInscritosIds = inscripciones.map(
+          (inscripcion) => inscripcion.studentId
+        );
+
+        // Filtrar los estudiantes que no están inscritos en el curso
+        const estudiantesDisponibles = estudiantes.filter(
+          (estudiante) => !estudiantesInscritosIds.includes(estudiante.id)
+        );
+
+        // Retornar los estudiantes disponibles
+        return of(estudiantesDisponibles);
+      })
+    );
+  }
+
+  obtenerAlumnosPorCursoId(idCurso: number): Observable<Alumno[]> {
+    return this.httpClient
+      .get<InscripcionEstudiantes[]>(
+        `${enviroment.apiBaseUrl}/inscriptions?courseId=${idCurso}&_expand=student`
+      )
+      .pipe(
+        map((inscripciones) => {
+          return inscripciones.map((inscripcion) => inscripcion.student);
+        })
+      );
   }
 
   eliminarAlumno(alumnoId: number): Observable<any> {

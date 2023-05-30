@@ -11,16 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { UsuariosModule } from '../dashboard/pages/usuarios/usuarios.module';
+import { UsuariosComponent } from '../dashboard/pages/usuarios/usuarios.component';
+import { UsuarioDetalleComponent } from '../dashboard/pages/usuarios/components/usuario-detalle/usuario-detalle.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
   },
-  // {
-  //   path: 'register',
-  //   component: RegisterComponent,
-  // },
   {
     path: '**',
     redirectTo: 'login',
@@ -28,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent],
+  declarations: [AuthComponent, LoginComponent, UsuarioDetalleComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
