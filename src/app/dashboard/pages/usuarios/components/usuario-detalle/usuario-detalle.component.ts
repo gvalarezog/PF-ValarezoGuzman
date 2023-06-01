@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { IUsuario } from '../../models';
+import { Observable } from 'rxjs';
+import { Usuario } from '../../models';
 import { Store } from '@ngrx/store';
 import { State } from '../../store/usuarios.reducer';
 import { UsuariosActions } from '../../store/usuarios.actions';
@@ -14,7 +14,7 @@ import { selectUsuariosState } from '../../store/usuarios.selectors';
 })
 export class UsuarioDetalleComponent implements OnInit {
   state$: Observable<State>;
-  public usuario?: IUsuario;
+  public usuario?: Usuario;
   constructor(private activatedRoute: ActivatedRoute, private store: Store) {
     this.state$ = this.store.select(selectUsuariosState);
     this.store.dispatch(

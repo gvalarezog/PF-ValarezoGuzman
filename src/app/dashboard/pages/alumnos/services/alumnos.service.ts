@@ -4,15 +4,12 @@ import {
   Observable,
   forkJoin,
   map,
-  mergeMap,
   of,
   switchMap,
-  take,
-  tap,
 } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Alumno, CrearAlumnoPayload } from '../models';
-import { enviroment } from 'src/environments/environments';
+import { environment } from 'src/environments/environments';
 import {
   Inscripcion,
   InscripcionEstudiantes,
@@ -31,25 +28,25 @@ export class AlumnosService {
   }
 
   obtenerAlumnos(): Observable<Alumno[]> {
-    return this.httpClient.get<Alumno[]>(`${enviroment.apiBaseUrl}/students`);
+    return this.httpClient.get<Alumno[]>(`${environment.apiBaseUrl}/students`);
   }
 
   obtenerAlumnoPorId(id: number): Observable<Alumno> {
     return this.httpClient.get<Alumno>(
-      `${enviroment.apiBaseUrl}/students/${id}`
+      `${environment.apiBaseUrl}/students/${id}`
     );
   }
 
   obtenerAlumnosDisponiblesPorCursoId(idCurso: number): Observable<Alumno[]> {
     // Obtener todos los estudiantes
     const estudiantes$: Observable<Alumno[]> = this.httpClient.get<Alumno[]>(
-      `${enviroment.apiBaseUrl}/students`
+      `${environment.apiBaseUrl}/students`
     );
 
     // Obtener los estudiantes inscritos en el curso
     const inscripciones$: Observable<Inscripcion[]> = this.httpClient.get<
       Inscripcion[]
-    >(`${enviroment.apiBaseUrl}/inscriptions?courseId=${idCurso}`);
+    >(`${environment.apiBaseUrl}/inscriptions?courseId=${idCurso}`);
 
     // Combinar las llamadas usando forkJoin
     return forkJoin([estudiantes$, inscripciones$]).pipe(
@@ -73,7 +70,7 @@ export class AlumnosService {
   obtenerAlumnosPorCursoId(idCurso: number): Observable<Alumno[]> {
     return this.httpClient
       .get<InscripcionEstudiantes[]>(
-        `${enviroment.apiBaseUrl}/inscriptions?courseId=${idCurso}&_expand=student`
+        `${environment.apiBaseUrl}/inscriptions?courseId=${idCurso}&_expand=student`
       )
       .pipe(
         map((inscripciones) => {
@@ -84,14 +81,14 @@ export class AlumnosService {
 
   eliminarAlumno(alumnoId: number): Observable<any> {
     return this.httpClient.delete<any>(
-      `${enviroment.apiBaseUrl}/students/${alumnoId}`
+      `${environment.apiBaseUrl}/students/${alumnoId}`
     );
   }
 
   crearAlumno(payload: CrearAlumnoPayload): Observable<Alumno> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.httpClient.post<Alumno>(
-      `${enviroment.apiBaseUrl}/students`,
+      `${environment.apiBaseUrl}/students`,
       payload,
       {
         headers,
@@ -102,7 +99,7 @@ export class AlumnosService {
   editarAlumno(payload: Alumno, id: number): Observable<Alumno> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.httpClient.put<Alumno>(
-      `${enviroment.apiBaseUrl}/students/${id}`,
+      `${environment.apiBaseUrl}/students/${id}`,
       payload,
       {
         headers,

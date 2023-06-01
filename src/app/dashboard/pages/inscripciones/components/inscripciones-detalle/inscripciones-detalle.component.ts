@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Inscripcion } from '../../models';
 import { ActivatedRoute } from '@angular/router';
-import { InscripcionesService } from '../../services/inscripciones.service';
 import { Store } from '@ngrx/store';
 import { State } from '../../store/inscripciones.reducer';
 import { selectInscripcionesState } from '../../store/inscripciones.selectors';

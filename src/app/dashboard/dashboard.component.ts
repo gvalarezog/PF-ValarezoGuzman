@@ -1,13 +1,7 @@
-import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 import links, { NavItem } from './nav-items';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { Usuario } from '../core/models';
 
@@ -21,7 +15,6 @@ export class DashboardComponent implements OnInit {
   authUser$: Observable<Usuario | null>;
   links = links;
   linksFiltrados: NavItem[] = [];
-  // snapshot: ActivatedRouteSnapshot | null;
   componentName: string;
 
   constructor(

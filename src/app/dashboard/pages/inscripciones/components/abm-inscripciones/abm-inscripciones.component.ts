@@ -1,16 +1,12 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { CursosService } from '../../../cursos/services/cursos.service';
 import { AlumnosService } from '../../../alumnos/services/alumnos.service';
 import { Alumno } from '../../../alumnos/models';
-import { SelectionModel } from '@angular/cdk/collections';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
-  CreateInscripcionData,
-  Inscripcion,
-  InscripcionCompleta,
+  CreateInscripcionData
 } from '../../models';
 import { Curso, CursoMateria } from '../../../cursos/models/index';
 import { Store } from '@ngrx/store';
@@ -24,21 +20,13 @@ import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
   styleUrls: ['./abm-inscripciones.component.scss'],
 })
 export class AbmInscripcionesComponent implements OnInit, OnDestroy {
-  // dataSourceAlumnos = new MatTableDataSource();
   authUser$: Observable<Usuario | null>;
   cursosMateria: CursoMateria[] = [];
   alumnos: Alumno[] = [];
   selectedCourse?: CursoMateria;
-  // cursoSelected: Curso | any;
   panelOpenState = true;
-  // selected = 'Escoja el curso';
   step = 0;
-  // selectedValue: string;
-  // selectedAlumno: string;
-  // private destroyed$ = new Subject();
-  // displayedColumns: string[] = ['id', 'nombre'];
-  // dataSource = new MatTableDataSource<Alumno>();
-  // selection = new SelectionModel<Alumno>(true, []);
+
 
   selectedCourseControl = new FormControl<CursoMateria | undefined>(undefined);
 
@@ -114,9 +102,6 @@ export class AbmInscripcionesComponent implements OnInit, OnDestroy {
     this.step--;
   }
 
-  // guardarIncripcion() {
-  //   this.dialogRef.close(this.inscripcionForm.value);
-  // }
 
   ngOnInit(): void {
     this.cursosServicio.obtenerCursosMateria().subscribe({

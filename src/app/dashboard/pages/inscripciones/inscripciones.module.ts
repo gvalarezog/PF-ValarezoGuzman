@@ -44,18 +44,6 @@ import { inscripcionesFeature } from './store/inscripciones.reducer';
     InscripcionesRoutingModule,
     StoreModule.forFeature(inscripcionesFeature),
     EffectsModule.forFeature([InscripcionesEffects]),
-    // RouterModule.forChild([
-    //   {
-    //     // /dashboard/cursos
-    //     path: '',
-    //     component: InscripcionesComponent,
-    //   },
-    //   {
-    //     // /dashboard/cursos
-    //     path: ':id',
-    //     component: InscripcionesDetalleComponent,
-    //   },
-    // ]),
   ],
 })
 export class InscripcionesModule {}

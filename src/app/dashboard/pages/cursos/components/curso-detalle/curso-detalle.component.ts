@@ -1,16 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import { CursosService } from '../../services/cursos.service';
-import { Curso, CursoMateria } from '../../models';
+import { CursoMateria } from '../../models';
 import { InscripcionesService } from '../../../inscripciones/services/inscripciones.service';
 import {
   Inscripcion,
   InscripcionCompleta,
 } from '../../../inscripciones/models/index';
 import { MatTableDataSource } from '@angular/material/table';
-import { Alumno } from '../../../alumnos/models';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectCursosState } from '../../store/cursos.selectors';
 import { State } from '../../store/cursos.reducer';
 import { CursosActions } from '../../store/cursos.actions';

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CursosService } from './services/cursos.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component';
 import { MatDialog } from '@angular/material/dialog';

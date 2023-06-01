@@ -1,12 +1,12 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { UsuariosActions } from './usuarios.actions';
-import { IUsuario } from '../models';
+import { Usuario } from '../models';
 
 export const usuariosFeatureKey = 'usuarios';
 
 export interface State {
   loading: boolean;
-  usuarios: IUsuario[];
+  usuarios: Usuario[];
   error: unknown;
 }
 

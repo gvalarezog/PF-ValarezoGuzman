@@ -6,11 +6,8 @@ import {
   delay,
   forkJoin,
   from,
-  map,
   mergeMap,
-  of,
   switchMap,
-  take,
   tap,
 } from 'rxjs';
 import {
@@ -19,7 +16,7 @@ import {
   InscripcionCompleta,
 } from '../models';
 import { HttpClient } from '@angular/common/http';
-import { enviroment } from 'src/environments/environments';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +32,7 @@ export class InscripcionesService {
 
   obtenerInscripciones(): Observable<Inscripcion[]> {
     return this.httpClient
-      .get<Inscripcion[]>(`${enviroment.apiBaseUrl}/inscriptions`)
+      .get<Inscripcion[]>(`${environment.apiBaseUrl}/inscriptions`)
       .pipe(
         tap((inscripcion) => this.inscripciones$.next(inscripcion)),
         mergeMap(() => this.inscripciones$.asObservable())
@@ -44,7 +41,7 @@ export class InscripcionesService {
 
   getInscripciones(): Observable<InscripcionCompleta[]> {
     return this.httpClient.get<InscripcionCompleta[]>(
-      `${enviroment.apiBaseUrl}/inscriptions?_expand=course&_expand=student&_expand=subject`
+      `${environment.apiBaseUrl}/inscriptions?_expand=course&_expand=student&_expand=subject`
     );
   }
 
@@ -71,7 +68,10 @@ export class InscripcionesService {
       concatMap(
         (student) =>
           this.httpClient
-            .post<Inscripcion>(`${enviroment.apiBaseUrl}/inscriptions`, student)
+            .post<Inscripcion>(
+              `${environment.apiBaseUrl}/inscriptions`,
+              student
+            )
             .pipe(delay(500)) // Agregar un retraso de 1 segundo entre cada solicitud
       ),
       concatMap((createResponse) =>
@@ -82,7 +82,7 @@ export class InscripcionesService {
 
   getInscripcionCompletaPorId(id: number): Observable<InscripcionCompleta> {
     return this.httpClient.get<InscripcionCompleta>(
-      `${enviroment.apiBaseUrl}/inscriptions/${id}?_expand=student&_expand=subject&_expand=course`
+      `${environment.apiBaseUrl}/inscriptions/${id}?_expand=student&_expand=subject&_expand=course`
     );
   }
 
@@ -90,7 +90,7 @@ export class InscripcionesService {
     idAlumno: number
   ): Observable<InscripcionCompleta[]> {
     return this.httpClient.get<InscripcionCompleta[]>(
-      `${enviroment.apiBaseUrl}/inscriptions?studentId=${idAlumno}&_expand=course&_expand=subject&_expand=student`
+      `${environment.apiBaseUrl}/inscriptions?studentId=${idAlumno}&_expand=course&_expand=subject&_expand=student`
     );
   }
 
@@ -98,27 +98,27 @@ export class InscripcionesService {
     idCurso: number
   ): Observable<InscripcionCompleta[]> {
     return this.httpClient.get<InscripcionCompleta[]>(
-      `${enviroment.apiBaseUrl}/inscriptions?courseId=${idCurso}&_expand=student&_expand=subject&_expand=course`
+      `${environment.apiBaseUrl}/inscriptions?courseId=${idCurso}&_expand=student&_expand=subject&_expand=course`
     );
   }
 
   eliminarInscripcionPorId(id: number): Observable<unknown> {
     return this.httpClient.delete(
-      `${enviroment.apiBaseUrl}/inscriptions/${id}`
+      `${environment.apiBaseUrl}/inscriptions/${id}`
     );
   }
 
   eliminarInscripcionCursoPorId(id: number): Observable<unknown> {
     return this.httpClient
       .get<Inscripcion[]>(
-        `${enviroment.apiBaseUrl}/inscriptions?courseId=${id}`
+        `${environment.apiBaseUrl}/inscriptions?courseId=${id}`
       )
       .pipe(
         switchMap((inscripciones) => {
           const ids = inscripciones.map((inscripcion) => inscripcion.id);
           const deleteRequests = ids.map((inscripcionId, index) =>
             this.httpClient
-              .delete(`${enviroment.apiBaseUrl}/inscriptions/${inscripcionId}`)
+              .delete(`${environment.apiBaseUrl}/inscriptions/${inscripcionId}`)
               .pipe(
                 delay(index * 750) // Ajusta el tiempo de retraso aquí (en milisegundos)
               )

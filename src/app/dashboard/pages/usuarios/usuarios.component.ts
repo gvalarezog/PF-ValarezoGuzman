@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateUsuarioData, IUsuario } from './models';
+import { CreateUsuarioData, Usuario } from './models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State } from './store/usuarios.reducer';
@@ -18,7 +18,7 @@ import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmac
 })
 export class UsuariosComponent implements OnInit {
   state$: Observable<State>;
-  dataSource = new MatTableDataSource<IUsuario>();
+  dataSource = new MatTableDataSource<Usuario>();
   displayedColumns: string[] = [
     'id',
     'nombreCompleto',
@@ -74,7 +74,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editarUsuario(usuarioParaEditar: IUsuario): void {
+  editarUsuario(usuarioParaEditar: Usuario): void {
     const dialog = this.matDialog.open(AbmUsuarioComponent, {
       data: {
         usuarioParaEditar,
@@ -84,7 +84,7 @@ export class UsuariosComponent implements OnInit {
       if (formValue) {
         this.store.dispatch(
           UsuariosActions.updateUsuario({
-            data: formValue as IUsuario,
+            data: formValue as Usuario,
             id: usuarioParaEditar.id as number,
           })
         );

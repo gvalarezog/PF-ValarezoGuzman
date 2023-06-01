@@ -51,15 +51,4 @@ export class AbmAlumnosComponent {
       this.alumnosForm.markAllAsTouched();
     }
   }
-
-  // noEscogerValidator(): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     if (control.value?.toLowerCase().includes('Escoger...')) {
-  //       return {
-  //         noEscoger: true,
-  //       };
-  //     }
-  //     return null;
-  //   };
-  // }
 }
