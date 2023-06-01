@@ -1,12 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -17,13 +10,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AbmAlumnosComponent {
   nombreControl = new FormControl('', [Validators.required]);
   apellidoControl = new FormControl('', [Validators.required]);
-  idControl = new FormControl();
-  fechaRegistroControl = new FormControl();
+  // idControl = new FormControl();
+  fechaRegistroControl = new FormControl<Date>(new Date());
 
   alumnosForm = new FormGroup({
     nombre: this.nombreControl,
     apellido: this.apellidoControl,
-    id: this.idControl,
+    // id: this.idControl,
     fechaRegistro: this.fechaRegistroControl,
   });
 
@@ -31,11 +24,12 @@ export class AbmAlumnosComponent {
     private dialogRef: MatDialogRef<AbmAlumnosComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
-    if (data) {
-      this.nombreControl.setValue(data.alumnoParaEditar.nombre);
-      this.apellidoControl.setValue(data.alumnoParaEditar.apellido);
-      this.fechaRegistroControl.setValue(data.alumnoParaEditar.fechaRegistro);
-      this.idControl.setValue(data.alumnoParaEditar.id);
+    if (this.data && this.data.alumnoEditar) {
+      this.nombreControl.setValue(data.alumnoEditar.nombre);
+      this.apellidoControl.setValue(data.alumnoEditar.apellido);
+      const fechaActual = new Date();
+      this.fechaRegistroControl.setValue(fechaActual);
+      // this.idControl.setValue(data.alumnoParaEditar.id);
     }
   }
 
@@ -47,14 +41,14 @@ export class AbmAlumnosComponent {
     }
   }
 
-  noEscogerValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value?.toLowerCase().includes('Escoger...')) {
-        return {
-          noEscoger: true,
-        };
-      }
-      return null;
-    };
-  }
+  // noEscogerValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     if (control.value?.toLowerCase().includes('Escoger...')) {
+  //       return {
+  //         noEscoger: true,
+  //       };
+  //     }
+  //     return null;
+  //   };
+  // }
 }

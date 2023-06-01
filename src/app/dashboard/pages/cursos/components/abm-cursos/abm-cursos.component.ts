@@ -48,10 +48,10 @@ export class AbmCursosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.data && this.data.cursoParaEditar) {
-      this.materiasServicio.obtenerMaterias().subscribe((materias) => {
-        this.materias = materias;
-        const materiaSeleccionada = this.materias.find(
+    this.materiasServicio.obtenerMaterias().subscribe((materias) => {
+      this.materias = materias;
+      if (this.data && this.data.cursoParaEditar) {
+        const materiaSeleccionada = this.materias?.find(
           (materia) => materia.id === this.data.cursoParaEditar.subject.id
         );
         this.subjectControl.setValue(materiaSeleccionada);
@@ -59,8 +59,8 @@ export class AbmCursosComponent implements OnInit, OnDestroy {
           this.data.cursoParaEditar.fecha_inicio
         );
         this.fechaFinControl.setValue(this.data.cursoParaEditar.fecha_fin);
-      });
-    }
+      }
+    });
   }
 
   guardar(): void {

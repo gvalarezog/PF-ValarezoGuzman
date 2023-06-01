@@ -1,5 +1,5 @@
 <div class="mb-3">
-  <button (click)="abrirABMAlumnos()" color="primary" mat-flat-button>
+  <button (click)="crearAlumno()" color="primary" mat-flat-button>
     <mat-icon>add</mat-icon>
     Agregar Alumno
   </button>
@@ -26,7 +26,7 @@
   <ng-container matColumnDef="ver_detalle">
     <th mat-header-cell *matHeaderCellDef>Ver</th>
     <td mat-cell *matCellDef="let alumno">
-      <button mat-icon-button (click)="irAlDetalle(alumno.id)">
+      <button mat-icon-button (click)="verAlumnoDetalle(alumno.id)">
         <mat-icon>visibility</mat-icon>
       </button>
     </td>
@@ -43,7 +43,7 @@
   <ng-container matColumnDef="eliminar">
     <th mat-header-cell *matHeaderCellDef><span *ngIf="(authUser$ | async)?.role==='admin'">Eliminar</span></th>
     <td mat-cell *matCellDef="let alumno">
-      <button *ngIf="(authUser$ | async)?.role==='admin'" mat-icon-button (click)="eliminarAlumno(alumno)">
+      <button *ngIf="(authUser$ | async)?.role==='admin'" mat-icon-button (click)="eliminarAlumno(alumno.id)">
         <mat-icon>close</mat-icon>
       </button>
     </td>

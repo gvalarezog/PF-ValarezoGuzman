@@ -4,11 +4,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AbmAlumnosComponent } from './components/abm-alumnos/abm-alumnos.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from './services/alumnos.service';
-import { Alumno } from './models';
+import { Alumno, CrearAlumnoPayload } from './models';
 import { Usuario } from 'src/app/core/models';
 import { Observable } from 'rxjs';
 import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
+import { State } from './store/alumnos.reducer';
+import { selectAlumnosState } from './store/alumnos.selectors';
+import { AlumnosActions } from './store/alumnos.actions';
 
 @Component({
   selector: 'app-alumnos',
@@ -16,6 +19,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./alumnos.component.scss'],
 })
 export class AlumnosComponent {
+  state$: Observable<State>;
   authUser$: Observable<Usuario | null>;
   displayedColumns: string[] = [
     'id',
@@ -36,61 +40,60 @@ export class AlumnosComponent {
     private matDialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private alumnoService: AlumnosService,
     private store: Store
   ) {
+    this.state$ = this.store.select(selectAlumnosState);
     this.authUser$ = this.store.select(selectAuthUser);
-    this.alumnoService.obtenerAlumnos().subscribe((alumnos) => {
-      this.dataSource.data = alumnos;
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(AlumnosActions.loadAlumnos());
+    this.state$.subscribe({
+      next: (stateAlumnos) => {
+        this.dataSource.data = stateAlumnos.alumnos;
+      },
     });
   }
 
-  abrirABMAlumnos(): void {
+  crearAlumno(): void {
     const dialog = this.matDialog.open(AbmAlumnosComponent);
-    dialog.afterClosed().subscribe((valor) => {
-      if (valor) {
-        this.alumnoService.crearAlumno(valor).subscribe((alumno) => {
-          this.dataSource.data = [
-            ...this.dataSource.data,
-            {
-              ...alumno,
-            },
-          ];
-        });
+    dialog.afterClosed().subscribe((formValue) => {
+      if (formValue) {
+        this.store.dispatch(
+          AlumnosActions.createAlumno({
+            data: formValue as CrearAlumnoPayload,
+          })
+        );
       }
     });
   }
 
-  irAlDetalle(alumnoId: number): void {
+  verAlumnoDetalle(alumnoId: number): void {
     this.router.navigate([alumnoId], {
       relativeTo: this.activatedRoute,
     });
   }
 
-  eliminarAlumno(alumnoParaEliminar: Alumno): void {
-    this.alumnoService.eliminarAlumno(alumnoParaEliminar.id).subscribe();
-    this.dataSource.data = this.dataSource.data.filter(
-      (alumnoActual) => alumnoActual.id !== alumnoParaEliminar.id
-    );
+  eliminarAlumno(id: number): void {
+    if (confirm('Está seguro?')) {
+      this.store.dispatch(AlumnosActions.deleteAlumno({ id }));
+    }
   }
 
-  editarAlumno(alumnoParaEditar: Alumno): void {
+  editarAlumno(alumnoEditar: Alumno): void {
     const dialog = this.matDialog.open(AbmAlumnosComponent, {
       data: {
-        alumnoParaEditar,
+        alumnoEditar,
       },
     });
     dialog.afterClosed().subscribe((valorDelFormulario) => {
       if (valorDelFormulario) {
-        this.alumnoService
-          .editarAlumno(valorDelFormulario)
-          .subscribe((alumno) => {
-            this.dataSource.data = this.dataSource.data.map((alumnoActual) =>
-              alumnoActual.id === alumno.id
-                ? { ...alumnoActual, ...alumno }
-                : alumnoActual
-            );
-          });
+        this.store.dispatch(
+          AlumnosActions.updateAlumno({
+            data: valorDelFormulario as Alumno,
+            id: alumnoEditar.id as number,
+          })
+        );
       }
     });
   }

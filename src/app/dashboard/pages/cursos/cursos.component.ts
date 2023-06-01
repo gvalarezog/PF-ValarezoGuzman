@@ -57,7 +57,6 @@ export class CursosComponent implements OnInit {
     const dialog = this.matDialog.open(AbmCursosComponent);
     dialog.afterClosed().subscribe((formValue) => {
       if (formValue) {
-        console.log(formValue);
         this.store.dispatch(
           CursosActions.createCurso({
             data: formValue as CrearCursoPayload,
@@ -75,11 +74,6 @@ export class CursosComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((valorDelFormulario) => {
       if (valorDelFormulario) {
-        // this.cursosService
-        //   .editarCurso(cursoParaEditar.id, valorDelFormulario)
-        //   .subscribe((cursos) => {
-        //     this.dataSource.data = cursos;
-        //   });
         this.store.dispatch(
           CursosActions.updateCurso({
             data: valorDelFormulario as CursoMateria,
@@ -98,7 +92,7 @@ export class CursosComponent implements OnInit {
 
   aplicarFiltros(ev: Event): void {}
 
-  verDetalle(cursoId: number): void {
+  verCursoDetalle(cursoId: number): void {
     this.router.navigate([cursoId], {
       relativeTo: this.activatedRoute,
     });

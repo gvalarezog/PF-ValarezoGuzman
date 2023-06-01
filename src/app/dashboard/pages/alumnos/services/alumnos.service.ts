@@ -31,15 +31,10 @@ export class AlumnosService {
   }
 
   obtenerAlumnos(): Observable<Alumno[]> {
-    return this.httpClient
-      .get<Alumno[]>(`${enviroment.apiBaseUrl}/students`)
-      .pipe(
-        tap((alumnos) => this.alumnos$.next(alumnos)),
-        mergeMap(() => this.alumnos$.asObservable())
-      );
+    return this.httpClient.get<Alumno[]>(`${enviroment.apiBaseUrl}/students`);
   }
 
-  obtenerAlumnoPorId(id: number): Observable<Alumno | undefined> {
+  obtenerAlumnoPorId(id: number): Observable<Alumno> {
     return this.httpClient.get<Alumno>(
       `${enviroment.apiBaseUrl}/students/${id}`
     );
@@ -91,22 +86,10 @@ export class AlumnosService {
     return this.httpClient.delete<any>(
       `${enviroment.apiBaseUrl}/students/${alumnoId}`
     );
-    // this.alumnos$.pipe(take(1)).subscribe({
-    //   next: (alumno) => {
-    //     const alumnosActualizados = alumno.filter(
-    //       (alumno) => alumno.id !== alumnoId
-    //     );
-    //     this.alumnos$.next(alumnosActualizados);
-    //   },
-    //   complete: () => {},
-    //   error: () => {},
-    // });
-    // return this.alumnos$.asObservable();
   }
 
   crearAlumno(payload: CrearAlumnoPayload): Observable<Alumno> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    payload.fechaRegistro = new Date();
     return this.httpClient.post<Alumno>(
       `${enviroment.apiBaseUrl}/students`,
       payload,
@@ -116,10 +99,10 @@ export class AlumnosService {
     );
   }
 
-  editarAlumno(payload: Alumno): Observable<Alumno> {
+  editarAlumno(payload: Alumno, id: number): Observable<Alumno> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.httpClient.put<Alumno>(
-      `${enviroment.apiBaseUrl}/students/${payload.id}`,
+      `${enviroment.apiBaseUrl}/students/${id}`,
       payload,
       {
         headers,

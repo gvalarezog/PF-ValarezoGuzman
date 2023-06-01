@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
 import { AlumnoDetalleComponent } from './components/alumno-detalle/alumno-detalle.component';
 import { AbmAlumnosComponent } from './components/abm-alumnos/abm-alumnos.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { AlumnosEffects } from './store/alumnos.effects';
+import { alumnosFeature } from './store/alumnos.reducer';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AlumnosComponent, AbmAlumnosComponent, AlumnoDetalleComponent],
@@ -35,6 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         component: AlumnoDetalleComponent,
       },
     ]),
+    EffectsModule.forFeature([AlumnosEffects]),
+    StoreModule.forFeature(alumnosFeature),
   ],
   exports: [AlumnosComponent],
 })

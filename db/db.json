@@ -42,10 +42,22 @@
       "id": 3
     },
     {
-      "subjectId": 2,
+      "subjectId": 3,
       "fecha_inicio": "2023-05-02T05:00:00.000Z",
       "fecha_fin": "2023-05-30T05:00:00.000Z",
       "id": 4
+    },
+    {
+      "subjectId": 2,
+      "fecha_inicio": "2023-06-01T05:00:00.000Z",
+      "fecha_fin": "2023-06-30T05:00:00.000Z",
+      "id": 5
+    },
+    {
+      "subjectId": 1,
+      "fecha_inicio": "2023-07-01T05:00:00.000Z",
+      "fecha_fin": "2023-07-31T05:00:00.000Z",
+      "id": 6
     }
   ],
   "subjects": [
@@ -141,6 +153,7 @@
     {
       "nombre": "Guillermo",
       "apellido": "Valarezo",
+      "fechaRegistro": "2023-04-27T01:27:59.631Z",
       "id": 6
     },
     {
@@ -154,6 +167,18 @@
       "apellido": "Valarezo Naranjo",
       "id": 8,
       "fechaRegistro": "2023-05-17T05:18:01.248Z"
+    },
+    {
+      "nombre": "Alejandra",
+      "apellido": "Granda Naranj",
+      "fechaRegistro": "2023-06-01T04:37:02.606Z",
+      "id": 9
+    },
+    {
+      "nombre": "Renata",
+      "apellido": "Aguilar V",
+      "fechaRegistro": "2023-06-01T04:38:53.063Z",
+      "id": 10
     }
   ]
 }
