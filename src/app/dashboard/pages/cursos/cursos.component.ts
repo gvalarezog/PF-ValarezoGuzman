@@ -90,7 +90,10 @@ export class CursosComponent implements OnInit {
     }
   }
 
-  aplicarFiltros(ev: Event): void {}
+  aplicarFiltros(ev: Event): void {
+    const inputValue = (ev.target as HTMLInputElement)?.value;
+    this.dataSource.filter = inputValue?.trim()?.toLocaleLowerCase();
+  }
 
   verCursoDetalle(cursoId: number): void {
     this.router.navigate([cursoId], {

@@ -16,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AlumnosEffects } from './store/alumnos.effects';
 import { alumnosFeature } from './store/alumnos.reducer';
 import { StoreModule } from '@ngrx/store';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AlumnosComponent, AbmAlumnosComponent, AlumnoDetalleComponent],
@@ -28,6 +29,7 @@ import { StoreModule } from '@ngrx/store';
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {

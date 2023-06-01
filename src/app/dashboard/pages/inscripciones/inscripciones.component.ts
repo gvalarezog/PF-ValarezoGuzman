@@ -14,6 +14,7 @@ import { Alumno } from '../alumnos/models';
 import { Inscripcion } from './models';
 import { Usuario } from 'src/app/core/models';
 import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
+import { FormErrorHelperComponent } from 'src/app/shared/components/form-error-helper/form-error-helper.component';
 
 @Component({
   selector: 'app-inscripciones',
@@ -87,11 +88,14 @@ export class InscripcionesComponent implements OnInit {
   }
 
   eliminarInscripcion(id: number): void {
-    if (confirm('Está seguro?')) {
-      this.store.dispatch(
-        InscripcionesActions.deleteInscripcionporcurso({ id })
-      );
-    }
+    const dialogRef = this.dialog.open(FormErrorHelperComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        InscripcionesActions.deleteInscripcionporcurso({ id });
+      }
+    });
   }
 
   editarInscripcion(inscripcion: Inscripcion): void {

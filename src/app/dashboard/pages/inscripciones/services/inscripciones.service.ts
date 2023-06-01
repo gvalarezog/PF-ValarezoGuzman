@@ -54,11 +54,15 @@ export class InscripcionesService {
     const modifiedPayload = {
       subjectId: payload.subjectId,
       courseId: payload.courseId,
+      usuario: payload.usuario,
+      fechaInscripcion: payload.fechaInscripcion,
       students: payload.alumnos.map((alumno) => {
         return {
           subjectId: payload.subjectId,
           studentId: alumno.id,
           courseId: payload.courseId,
+          usuario: payload.usuario,
+          fechaInscripcion: payload.fechaInscripcion,
         };
       }),
     };

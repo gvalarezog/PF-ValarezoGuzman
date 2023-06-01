@@ -15,6 +15,7 @@ export class ControlErrorMessagesPipe implements PipeTransform {
       maxlength: '..',
       min: 'Debe ser mayor a ...',
       max: '',
+      fechaInvalida: 'Fecha debe ser mayor a la inicial',
     };
 
     if (opciones[error.key]) {

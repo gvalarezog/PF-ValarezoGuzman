@@ -1,17 +1,8 @@
-<div *ngFor="let error of formErrors | keyvalue">
-  <ng-container [ngSwitch]="error.key">
-    <small class="text-danger" *ngSwitchCase="'required'">
-      Este campo es requerido
-    </small>
-    <small class="text-danger" *ngSwitchCase="'minlength'">
-      Debe tener al menos {{ error.value['requiredLength'] }} caracteres
-    </small>
-    <small class="text-danger" *ngSwitchCase="'email'">
-      No es un email valido
-    </small>
-    <small class="text-danger" *ngSwitchCase="'noEscoger'">
-      Debe escoger una opción
-    </small>
-    <small class="text-danger" *ngSwitchDefault>Error desconocido</small>
-  </ng-container>
+<h1 mat-dialog-title>Confirmación</h1>
+<div mat-dialog-content>
+  <p>Está seguro de la eliminación?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (mat-dialog-close)="false">Cancelar</button>
+  <button mat-button (mat-dialog-close)="true" cdkFocusInitial>Aceptar</button>
 </div>

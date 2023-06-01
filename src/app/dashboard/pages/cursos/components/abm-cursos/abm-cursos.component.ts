@@ -20,11 +20,17 @@ export class AbmCursosComponent implements OnInit, OnDestroy {
   idSubjectControl = new FormControl<number | null>(null, [
     Validators.required,
   ]);
+  horasControl = new FormControl<number | null>(null, [Validators.required]);
+  clasesControl = new FormControl<number | null>(null, [Validators.required]);
+  profesorControl = new FormControl<string | null>(null, [Validators.required]);
 
   cursoForm = new FormGroup({
     subjectId: this.idSubjectControl,
     fecha_inicio: this.fechaInicioControl,
     fecha_fin: this.fechaFinControl,
+    horas: this.horasControl,
+    clases: this.clasesControl,
+    profesor: this.profesorControl,
   });
 
   destroyed$ = new sub<void>();
@@ -59,8 +65,42 @@ export class AbmCursosComponent implements OnInit, OnDestroy {
           this.data.cursoParaEditar.fecha_inicio
         );
         this.fechaFinControl.setValue(this.data.cursoParaEditar.fecha_fin);
+
+        this.horasControl.setValue(
+          this.data.cursoParaEditar.horas ? this.data.cursoParaEditar.horas : ''
+        );
+        this.clasesControl.setValue(
+          this.data.cursoParaEditar.clases
+            ? this.data.cursoParaEditar.clases
+            : ''
+        );
+        this.profesorControl.setValue(
+          this.data.cursoParaEditar.profesor
+            ? this.data.cursoParaEditar.profesor
+            : ''
+        );
       }
     });
+    this.fechaInicioControl.valueChanges.subscribe((fechaInicio) => {
+      const fechaFin = this.fechaFinControl.value;
+      if (fechaInicio && fechaFin && fechaInicio > fechaFin) {
+        this.fechaFinControl.setErrors({ fechaInvalida: true });
+      } else {
+        this.fechaFinControl.setErrors(null);
+      }
+    });
+
+    this.fechaFinControl.setValidators([
+      Validators.required,
+      (control) => {
+        const fechaInicio = this.fechaInicioControl.value;
+        const fechaFin = control.value;
+        if (fechaInicio && fechaFin && fechaInicio > fechaFin) {
+          return { fechaInvalida: true };
+        }
+        return null;
+      },
+    ]);
   }
 
   guardar(): void {

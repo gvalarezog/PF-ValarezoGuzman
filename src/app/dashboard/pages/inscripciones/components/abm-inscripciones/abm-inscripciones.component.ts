@@ -6,7 +6,7 @@ import { Alumno } from '../../../alumnos/models';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   CreateInscripcionData,
   Inscripcion,
@@ -15,6 +15,8 @@ import {
 import { Curso, CursoMateria } from '../../../cursos/models/index';
 import { Store } from '@ngrx/store';
 import { InscripcionesActions } from '../../store/inscripciones.actions';
+import { Usuario } from 'src/app/core/models';
+import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-abm-inscripciones',
@@ -23,6 +25,7 @@ import { InscripcionesActions } from '../../store/inscripciones.actions';
 })
 export class AbmInscripcionesComponent implements OnInit, OnDestroy {
   // dataSourceAlumnos = new MatTableDataSource();
+  authUser$: Observable<Usuario | null>;
   cursosMateria: CursoMateria[] = [];
   alumnos: Alumno[] = [];
   selectedCourse?: CursoMateria;
@@ -42,11 +45,15 @@ export class AbmInscripcionesComponent implements OnInit, OnDestroy {
   courseIdControl = new FormControl();
   alumnoControl = new FormControl<Alumno[] | null>(null);
   subjectIdControl = new FormControl();
+  usuarioControl = new FormControl();
+  fechaControl = new FormControl<Date>(new Date());
 
   inscripcionForm = new FormGroup({
     courseId: this.courseIdControl,
     alumnos: this.alumnoControl,
     subjectId: this.subjectIdControl,
+    usuario: this.usuarioControl,
+    fechaInscripcion: this.fechaControl,
   });
 
   destroyed$ = new Subject<void>();
@@ -58,6 +65,7 @@ export class AbmInscripcionesComponent implements OnInit, OnDestroy {
     private store: Store,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
+    this.authUser$ = this.store.select(selectAuthUser);
     this.selectedCourseControl.valueChanges
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
@@ -106,9 +114,9 @@ export class AbmInscripcionesComponent implements OnInit, OnDestroy {
     this.step--;
   }
 
-  guardarIncripcion() {
-    this.dialogRef.close(this.inscripcionForm.value);
-  }
+  // guardarIncripcion() {
+  //   this.dialogRef.close(this.inscripcionForm.value);
+  // }
 
   ngOnInit(): void {
     this.cursosServicio.obtenerCursosMateria().subscribe({
@@ -138,6 +146,13 @@ export class AbmInscripcionesComponent implements OnInit, OnDestroy {
   onSave(): void {
     if (this.inscripcionForm.value.alumnos) {
       if (this.inscripcionForm.value.alumnos.length > 0) {
+        const fechaActual = new Date();
+        this.fechaControl.setValue(fechaActual);
+        this.authUser$.subscribe((usuarioAutenticado) => {
+          this.usuarioControl.setValue(
+            usuarioAutenticado?.nombre + ' ' + usuarioAutenticado?.apellido
+          );
+        });
         this.store.dispatch(
           InscripcionesActions.createInscripcion({
             data: this.inscripcionForm.value as CreateInscripcionData,

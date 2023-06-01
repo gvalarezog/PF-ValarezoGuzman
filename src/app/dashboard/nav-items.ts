@@ -20,7 +20,7 @@ let links: NavItem[] = [
   },
   {
     path: 'inscripciones',
-    title: 'Incripciones',
+    title: 'Inscripciones',
     icon: 'auto_stories',
     role: 'user',
   },

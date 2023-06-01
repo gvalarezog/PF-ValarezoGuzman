@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
+import { Component, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-form-error-helper',
@@ -7,6 +7,8 @@ import { ValidationErrors } from '@angular/forms';
   styleUrls: ['./form-error-helper.component.scss'],
 })
 export class FormErrorHelperComponent {
-  @Input()
-  formErrors: ValidationErrors | null = null;
+  constructor(
+    public dialogRef: MatDialogRef<FormErrorHelperComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

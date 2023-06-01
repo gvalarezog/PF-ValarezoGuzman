@@ -7,6 +7,8 @@ export interface Inscripcion {
   studentId: number;
   courseId: number;
   subjectId: number;
+  usuario?: string;
+  fechaInscripcion?: Date;
 }
 
 export interface InscripcionEstudiantes extends Inscripcion {
@@ -25,6 +27,8 @@ export interface CreateInscripcionData {
   alumnos: Alumno[];
   courseId: number;
   subjectId: number;
+  usuario?: string;
+  fechaInscripcion?: Date;
 }
 
 export type InscripcionCompleta = InscripcionEstudiantes &

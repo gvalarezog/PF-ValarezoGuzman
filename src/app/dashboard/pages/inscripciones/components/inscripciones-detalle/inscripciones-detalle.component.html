@@ -3,6 +3,10 @@
 <ng-template #ifNotLoading>
   <p><strong>ID Curso: </strong>{{ (state$ | async)?.inscripciones?.[0]?.courseId }}</p>
   <p><strong>Nombre Curso: </strong>{{ (state$ | async)?.inscripciones?.[0]?.subject?.nombre }}</p>
+  <p *ngIf="(state$ | async)?.inscripciones?.[0]?.fechaInscripcion"><strong>Fecha: </strong>{{ (state$ |
+    async)?.inscripciones?.[0]?.fechaInscripcion | date: 'dd/MM/YYYY' }}</p>
+  <p *ngIf="(state$ | async)?.inscripciones?.[0]?.usuario"><strong>Usuario Registro: </strong>{{ (state$ |
+    async)?.inscripciones?.[0]?.usuario }}</p>
   <p><strong>Cantidad Alumnos: </strong>{{ (state$ | async)?.inscripciones?.length }}</p>
   <p><strong>Inscritos: </strong></p>
 

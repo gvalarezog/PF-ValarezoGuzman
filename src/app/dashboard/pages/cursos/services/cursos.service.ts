@@ -104,7 +104,6 @@ export class CursosService {
   }
 
   crearCurso(payload: CrearCursoPayload): Observable<CursoMateria> {
-    console.log(payload);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.httpClient
       .post<CursoMateria>(`${enviroment.apiBaseUrl}/courses`, payload, {

@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { FormErrorHelperModule } from 'src/app/shared/components/form-error-helper/form-error-helper.module';
 
 @NgModule({
   declarations: [UsuariosComponent, AbmUsuarioComponent],
@@ -32,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatDialogModule,
     MatSelectModule,
+    FormErrorHelperModule,
     MatFormFieldModule,
     RouterModule.forChild([
       {

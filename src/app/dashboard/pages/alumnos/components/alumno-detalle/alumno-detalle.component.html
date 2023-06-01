@@ -1,6 +1,8 @@
 <p><strong>Nombre:</strong> {{ alumno?.nombre }}</p>
 <p><strong>Apellido:</strong> {{ alumno?.apellido }}</p>
-<p><strong>Fecha Registro:</strong> {{ alumno?.fechaRegistro | date: 'dd/MM/YYYY'}}</p>
+<p *ngIf="alumno?.sexo"><strong>Sexo:</strong> {{ alumno?.sexo }}</p>
+<p *ngIf="alumno?.perfil"><strong>Perfil:</strong> {{ alumno?.perfil }}</p>
+<p *ngIf="alumno?.fechaRegistro"><strong>Fecha Registro:</strong> {{ alumno?.fechaRegistro | date: 'dd/MM/YYYY'}}</p>
 
 
 <table *ngIf="existeInscripcion" mat-table [dataSource]="dataSourceCursos" class="mat-elevation-z8">

@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { InscripcionesEffects } from './store/inscripciones.effects';
 import { StoreModule } from '@ngrx/store';
 import { inscripcionesFeature } from './store/inscripciones.reducer';
+import { FormErrorHelperModule } from 'src/app/shared/components/form-error-helper/form-error-helper.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { inscripcionesFeature } from './store/inscripciones.reducer';
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
+    FormErrorHelperModule,
     InscripcionesRoutingModule,
     StoreModule.forFeature(inscripcionesFeature),
     EffectsModule.forFeature([InscripcionesEffects]),

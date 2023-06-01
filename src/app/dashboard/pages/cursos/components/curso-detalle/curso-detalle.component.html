@@ -1,7 +1,10 @@
 <p><strong>Nombre: </strong>{{cursoMateria?.subject?.nombre}}</p>
 <p *ngIf="cursoMateria?.subject?.description"><strong>Detalle: </strong>{{cursoMateria?.subject?.description}}</p>
+<p *ngIf="cursoMateria?.profesor"><strong>Profesor:</strong> {{cursoMateria?.profesor}}</p>
 <p><strong>Fecha Incio:</strong> {{cursoMateria?.fecha_inicio | date: 'dd/MM/YYYY'}}</p>
 <p><strong>Fecha Fin:</strong> {{cursoMateria?.fecha_fin | date: 'dd/MM/YYYY' }}</p>
+<p *ngIf="cursoMateria?.horas"><strong>Cantidad Horas:</strong> {{cursoMateria?.horas}}</p>
+<p *ngIf="cursoMateria?.clases"><strong>Cantidad Clases:</strong> {{cursoMateria?.clases}}</p>
 <br>
 
 <table *ngIf="existeInscripcion" mat-table [dataSource]="dataSourceAlumnos" class="mat-elevation-z8">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateUsuarioData, IUsuario } from './models';
@@ -9,6 +9,7 @@ import { State } from './store/usuarios.reducer';
 import { selectUsuariosState } from './store/usuarios.selectors';
 import { UsuariosActions } from './store/usuarios.actions';
 import { AbmUsuarioComponent } from './components/abm-usuario/abm-usuario.component';
+import { FormErrorHelperComponent } from 'src/app/shared/components/form-error-helper/form-error-helper.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -32,7 +33,8 @@ export class UsuariosComponent implements OnInit {
     private matDialog: MatDialog,
     private store: Store,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.state$ = this.store.select(selectUsuariosState);
   }
@@ -64,7 +66,13 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminarUsuario(id: number): void {
-    this.store.dispatch(UsuariosActions.deleteUsuario({ id }));
+    const dialogRef = this.dialog.open(FormErrorHelperComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(UsuariosActions.deleteUsuario({ id }));
+      }
+    });
   }
 
   editarUsuario(usuarioParaEditar: IUsuario): void {

@@ -5,6 +5,9 @@ export interface Curso {
   subjectId: number;
   fecha_inicio: Date;
   fecha_fin: Date;
+  profesor?: string;
+  horas?: number;
+  clases?: number;
 }
 
 export interface CursoMateria extends Curso {
@@ -16,4 +19,7 @@ export interface CrearCursoPayload {
   subjectId: number;
   fecha_inicio: Date;
   fecha_fin: Date;
+  profesor?: string;
+  horas?: number;
+  clases?: number;
 }
