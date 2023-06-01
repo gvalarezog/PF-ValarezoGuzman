@@ -73,12 +73,6 @@
     },
     {
       "subjectId": 1,
-      "fecha_inicio": "2023-06-01T05:00:00.000Z",
-      "fecha_fin": "2023-06-26T05:00:00.000Z",
-      "id": 9
-    },
-    {
-      "subjectId": 1,
       "fecha_inicio": "2023-06-29T05:00:00.000Z",
       "fecha_fin": "2023-06-30T05:00:00.000Z",
       "horas": 40,
@@ -180,18 +174,6 @@
       "id": 50
     },
     {
-      "subjectId": 1,
-      "studentId": 7,
-      "courseId": 3,
-      "id": 52
-    },
-    {
-      "subjectId": 1,
-      "studentId": 10,
-      "courseId": 3,
-      "id": 53
-    },
-    {
       "subjectId": 3,
       "studentId": 3,
       "courseId": 6,
@@ -246,12 +228,6 @@
       "id": 62
     },
     {
-      "subjectId": 2,
-      "studentId": 10,
-      "courseId": 7,
-      "id": 63
-    },
-    {
       "subjectId": 3,
       "studentId": 3,
       "courseId": 8,
@@ -265,37 +241,9 @@
     },
     {
       "subjectId": 3,
-      "studentId": 10,
-      "courseId": 8,
-      "id": 66
-    },
-    {
-      "subjectId": 3,
       "studentId": 9,
       "courseId": 8,
       "id": 67
-    },
-    {
-      "subjectId": 1,
-      "studentId": 3,
-      "courseId": 9,
-      "id": 68
-    },
-    {
-      "subjectId": 1,
-      "studentId": 10,
-      "courseId": 9,
-      "usuario": "Guillermo Valarezo G",
-      "fechaInscripcion": "2023-06-01T14:00:27.112Z",
-      "id": 69
-    },
-    {
-      "subjectId": 1,
-      "studentId": 3,
-      "courseId": 10,
-      "usuario": "Guillermo Valarezo G",
-      "fechaInscripcion": "2023-06-01T14:00:50.112Z",
-      "id": 70
     }
   ],
   "students": [
@@ -342,14 +290,6 @@
       "fechaRegistro": "2023-06-01T17:57:47.084Z",
       "sexo": "Hombre",
       "id": 11
-    },
-    {
-      "nombre": "Cristiano",
-      "apellido": "Ronaldo",
-      "perfil": "Desarrollador",
-      "fechaRegistro": "2023-06-01T17:58:53.661Z",
-      "sexo": "Hombre",
-      "id": 12
     }
   ]
 }

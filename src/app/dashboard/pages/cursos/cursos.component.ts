@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { State } from './store/cursos.reducer';
 import { selectCursosState } from './store/cursos.selectors';
 import { CursosActions } from './store/cursos.actions';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-cursos',
@@ -34,7 +35,7 @@ export class CursosComponent implements OnInit {
   ];
 
   constructor(
-    private cursosService: CursosService,
+    private dialog: MatDialog,
     private matDialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -85,9 +86,12 @@ export class CursosComponent implements OnInit {
   }
 
   eliminarCurso(id: number): void {
-    if (confirm('Está seguro?')) {
-      this.store.dispatch(CursosActions.deleteCurso({ id }));
-    }
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(CursosActions.deleteCurso({ id }));
+      }
+    });
   }
 
   aplicarFiltros(ev: Event): void {

@@ -14,7 +14,7 @@ import { Alumno } from '../alumnos/models';
 import { Inscripcion } from './models';
 import { Usuario } from 'src/app/core/models';
 import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
-import { FormErrorHelperComponent } from 'src/app/shared/components/form-error-helper/form-error-helper.component';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-inscripciones',
@@ -36,7 +36,6 @@ export class InscripcionesComponent implements OnInit {
   curso: Curso | undefined;
 
   constructor(
-    // private inscripcionesServicio: InscripcionesService,
     private store: Store,
     private dialog: MatDialog,
     private router: Router,
@@ -88,10 +87,9 @@ export class InscripcionesComponent implements OnInit {
   }
 
   eliminarInscripcion(id: number): void {
-    const dialogRef = this.dialog.open(FormErrorHelperComponent);
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         InscripcionesActions.deleteInscripcionporcurso({ id });
       }

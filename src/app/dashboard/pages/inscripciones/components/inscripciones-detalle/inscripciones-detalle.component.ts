@@ -8,6 +8,8 @@ import { State } from '../../store/inscripciones.reducer';
 import { selectInscripcionesState } from '../../store/inscripciones.selectors';
 import { InscripcionesActions } from '../../store/inscripciones.actions';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-inscripciones-detalle',
@@ -23,8 +25,8 @@ export class InscripcionesDetalleComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    // private inscripcionServicio: InscripcionesService,
-    private store: Store
+    private store: Store,
+    private dialog: MatDialog
   ) {
     this.state$ = this.store.select(selectInscripcionesState);
     this.store.dispatch(
@@ -37,16 +39,15 @@ export class InscripcionesDetalleComponent implements OnDestroy {
         this.dataSourceIncripciones.data = stateInscripciones.inscripciones;
       },
     });
-    // this.inscripcionServicio
-    //   .getInscripcionPorIdCurso(
-    //     parseInt(this.activatedRoute.snapshot.params['id'])
-    //   )
-    //   .pipe(takeUntil(this.destroyed$))
-    //   .subscribe((inscripcion) => (this.inscripcion = inscripcion));
   }
 
   eliminarInscripcionPorId(id: number): void {
-    this.store.dispatch(InscripcionesActions.deleteInscripcion({ id }));
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(InscripcionesActions.deleteInscripcion({ id }));
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormErrorHelperComponent } from './form-error-helper.component';
+import { ConfirmacionDialogComponent } from './confirmacion-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [FormErrorHelperComponent],
+  declarations: [ConfirmacionDialogComponent],
   imports: [CommonModule, MatButtonModule, MatDialogModule],
-  exports: [FormErrorHelperComponent],
+  exports: [ConfirmacionDialogComponent],
 })
-export class FormErrorHelperModule {}
+export class ConfirmacionDialogModule {}

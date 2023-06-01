@@ -13,6 +13,8 @@ import { State } from '../../store/alumnos.reducer';
 import { selectAlumnosState } from '../../store/alumnos.selectors';
 import { Store } from '@ngrx/store';
 import { AlumnosActions } from '../../store/alumnos.actions';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-alumno-detalle',
@@ -35,8 +37,8 @@ export class AlumnoDetalleComponent implements OnDestroy, OnInit {
   ];
 
   constructor(
+    private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private alumnosService: AlumnosService,
     private inscripcionesService: InscripcionesService,
     private store: Store
   ) {
@@ -74,17 +76,20 @@ export class AlumnoDetalleComponent implements OnDestroy, OnInit {
   }
 
   anularInscripcionPorId(idInscripcion: number): void {
-    if (confirm('Está seguro?')) {
-      this.inscripcionesService
-        .eliminarInscripcionPorId(idInscripcion)
-        .subscribe((inscripcion) => {
-          this.dataSourceCursos.data = this.dataSourceCursos.data.filter(
-            (inscripcion) => inscripcion.id !== idInscripcion
-          );
-          if (this.dataSourceCursos.data.length === 0) {
-            this.existeInscripcion = false;
-          }
-        });
-    }
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.inscripcionesService
+          .eliminarInscripcionPorId(idInscripcion)
+          .subscribe((inscripcion) => {
+            this.dataSourceCursos.data = this.dataSourceCursos.data.filter(
+              (inscripcion) => inscripcion.id !== idInscripcion
+            );
+            if (this.dataSourceCursos.data.length === 0) {
+              this.existeInscripcion = false;
+            }
+          });
+      }
+    });
   }
 }

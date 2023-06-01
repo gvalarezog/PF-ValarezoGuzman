@@ -9,7 +9,7 @@ import { State } from './store/usuarios.reducer';
 import { selectUsuariosState } from './store/usuarios.selectors';
 import { UsuariosActions } from './store/usuarios.actions';
 import { AbmUsuarioComponent } from './components/abm-usuario/abm-usuario.component';
-import { FormErrorHelperComponent } from 'src/app/shared/components/form-error-helper/form-error-helper.component';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -66,8 +66,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminarUsuario(id: number): void {
-    const dialogRef = this.dialog.open(FormErrorHelperComponent);
-
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.store.dispatch(UsuariosActions.deleteUsuario({ id }));

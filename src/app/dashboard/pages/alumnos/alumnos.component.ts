@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { State } from './store/alumnos.reducer';
 import { selectAlumnosState } from './store/alumnos.selectors';
 import { AlumnosActions } from './store/alumnos.actions';
+import { ConfirmacionDialogComponent } from 'src/app/shared/components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-alumnos',
@@ -37,6 +38,7 @@ export class AlumnosComponent {
   }
 
   constructor(
+    private dialog: MatDialog,
     private matDialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -75,9 +77,12 @@ export class AlumnosComponent {
   }
 
   eliminarAlumno(id: number): void {
-    if (confirm('Está seguro?')) {
-      this.store.dispatch(AlumnosActions.deleteAlumno({ id }));
-    }
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(AlumnosActions.deleteAlumno({ id }));
+      }
+    });
   }
 
   editarAlumno(alumnoEditar: Alumno): void {

@@ -16,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
