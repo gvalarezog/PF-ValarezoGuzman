@@ -16,6 +16,8 @@ import { AbmUsuarioComponent } from './components/abm-usuario/abm-usuario.compon
   styleUrls: ['./usuarios.component.scss'],
 })
 export class UsuariosComponent implements OnInit {
+  state$: Observable<State>;
+  dataSource = new MatTableDataSource<IUsuario>();
   displayedColumns: string[] = [
     'id',
     'nombreCompleto',
@@ -25,8 +27,6 @@ export class UsuariosComponent implements OnInit {
     'editar',
     'eliminar',
   ];
-  state$: Observable<State>;
-  dataSource = new MatTableDataSource<IUsuario>();
 
   constructor(
     private matDialog: MatDialog,

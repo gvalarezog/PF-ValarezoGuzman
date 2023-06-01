@@ -6,8 +6,8 @@
     <div class="col-12 field">
       <mat-form-field appearance="fill">
         <mat-label>Curso</mat-label>
-        <mat-select name="materia" [(value)]="idSelected" [formControl]="idSubjectControl">
-          <mat-option *ngFor="let materia of materias" [value]="materia.id">
+        <mat-select name="materia" [(value)]="idSelected" [formControl]="subjectControl">
+          <mat-option *ngFor="let materia of materias" [value]="materia">
             {{materia.nombre}}
           </mat-option>
         </mat-select>

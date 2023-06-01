@@ -19,6 +19,9 @@ export class NombreComponentePipe implements PipeTransform {
         case 'AlumnoDetalle':
           componentName = 'Detalle Alumnos';
           break;
+        case 'UsuarioDetalle':
+          componentName = 'Detalle Usuarios';
+          break;
         default:
           // Mantén el nombre sin modificar
           break;

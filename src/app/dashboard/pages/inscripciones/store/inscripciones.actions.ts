@@ -1,4 +1,9 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import {
+  createAction,
+  createActionGroup,
+  emptyProps,
+  props,
+} from '@ngrx/store';
 import { CreateInscripcionData, InscripcionCompleta } from '../models';
 
 export const InscripcionesActions = createActionGroup({

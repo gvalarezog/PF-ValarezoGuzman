@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { CursosService } from '../../services/cursos.service';
 import { Curso, CursoMateria } from '../../models';
 import { InscripcionesService } from '../../../inscripciones/services/inscripciones.service';
@@ -10,10 +10,10 @@ import {
 } from '../../../inscripciones/models/index';
 import { MatTableDataSource } from '@angular/material/table';
 import { Alumno } from '../../../alumnos/models';
-import { Store } from '@ngrx/store';
-import { State } from '../../../inscripciones/store/inscripciones.reducer';
-import { selectInscripcionesState } from '../../../inscripciones/store/inscripciones.selectors';
-import { InscripcionesActions } from '../../../inscripciones/store/inscripciones.actions';
+import { Store, select } from '@ngrx/store';
+import { selectCursosState } from '../../store/cursos.selectors';
+import { State } from '../../store/cursos.reducer';
+import { CursosActions } from '../../store/cursos.actions';
 
 @Component({
   selector: 'app-curso-detalle',
@@ -21,7 +21,7 @@ import { InscripcionesActions } from '../../../inscripciones/store/inscripciones
   styleUrls: ['./curso-detalle.component.scss'],
 })
 export class CursoDetalleComponent implements OnDestroy {
-  // curso: Curso | undefined;
+  state$: Observable<State>;
   cursoMateria: CursoMateria | undefined;
   private destroyed$ = new Subject();
   dataSourceAlumnos = new MatTableDataSource<InscripcionCompleta>();
@@ -31,17 +31,23 @@ export class CursoDetalleComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cursoService: CursosService,
     private inscripcionesService: InscripcionesService,
     private store: Store
-  ) {}
+  ) {
+    this.state$ = this.store.select(selectCursosState);
+    this.store.dispatch(
+      CursosActions.loadCursodetalle({
+        id: parseInt(this.activatedRoute.snapshot.params['id']),
+      })
+    );
+  }
 
   ngOnInit(): void {
-    this.cursoService
-      .obtenerCursoPorId(parseInt(this.activatedRoute.snapshot.params['id']))
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((cursoMateria) => (this.cursoMateria = cursoMateria));
-
+    this.state$.pipe(takeUntil(this.destroyed$)).subscribe({
+      next: (stateCursos) => {
+        this.cursoMateria = stateCursos.cursosMateria[0];
+      },
+    });
     this.inscripcionesService
       .getInscripcionesPorIdCurso(
         parseInt(this.activatedRoute.snapshot.params['id'])

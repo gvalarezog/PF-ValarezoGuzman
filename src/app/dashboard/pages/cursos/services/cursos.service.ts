@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, mergeMap, take, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { CrearCursoPayload, Curso, CursoMateria } from '../models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { enviroment } from 'src/environments/environments';
@@ -25,65 +33,87 @@ export class CursosService {
         mergeMap(() => this.cursoMateria$.asObservable())
       );
   }
+
   obtenerCursosMateria(): Observable<CursoMateria[]> {
+    return this.httpClient.get<CursoMateria[]>(
+      `${enviroment.apiBaseUrl}/courses?_expand=subject`
+    );
+  }
+
+  editarCurso(data: CursoMateria, id: number): Observable<CursoMateria> {
     return this.httpClient
-      .get<CursoMateria[]>(`${enviroment.apiBaseUrl}/courses?_expand=subject`)
+      .put<CursoMateria>(`${enviroment.apiBaseUrl}/courses/${id}`, data)
       .pipe(
-        tap((cursoMateria) => this.cursoMateria$.next(cursoMateria)),
-        mergeMap(() => this.cursoMateria$.asObservable())
+        switchMap((curso: CursoMateria) => {
+          return this.obtenerCursoPorId(curso.id);
+        })
       );
   }
 
-  editarCurso(
-    cursoId: number,
-    actualizacion: Partial<CursoMateria>
-  ): Observable<CursoMateria[]> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.httpClient
-      .put<CursoMateria>(
-        `${enviroment.apiBaseUrl}/courses/${cursoId}`,
-        actualizacion,
-        {
-          headers,
-        }
-      )
-      .subscribe();
-    return this.obtenerCursosMateria();
-  }
+  // editarCurso(
+  //   cursoId: number,
+  //   actualizacion: Partial<CursoMateria>
+  // ): Observable<CursoMateria[]> {
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //   this.httpClient
+  //     .put<CursoMateria>(
+  //       `${enviroment.apiBaseUrl}/courses/${cursoId}`,
+  //       actualizacion,
+  //       {
+  //         headers,
+  //       }
+  //     )
+  //     .subscribe();
+  //   return this.obtenerCursosMateria();
+  // }
 
-  eliminarCurso(cursoId: number): Observable<Curso[]> {
+  // eliminarCurso(cursoId: number): Observable<Curso[]> {
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //   this.httpClient
+  //     .delete<CursoMateria>(`${enviroment.apiBaseUrl}/courses/${cursoId}`, {
+  //       headers,
+  //     })
+  //     .subscribe();
+  //   this.cursoMateria$.pipe(take(1)).subscribe({
+  //     next: (cursoMateria) => {
+  //       const cursoMateriaActualizados = cursoMateria.filter(
+  //         (curso) => curso.id !== cursoId
+  //       );
+  //       this.cursoMateria$.next(cursoMateriaActualizados);
+  //     },
+  //     complete: () => {},
+  //     error: () => {},
+  //   });
+  //   return this.cursoMateria$.asObservable();
+  // }
+
+  eliminarCurso(cursoId: number): Observable<unknown> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.httpClient
-      .delete<CursoMateria>(`${enviroment.apiBaseUrl}/courses/${cursoId}`, {
+    return this.httpClient.delete<CursoMateria>(
+      `${enviroment.apiBaseUrl}/courses/${cursoId}`,
+      {
         headers,
-      })
-      .subscribe();
-    this.cursoMateria$.pipe(take(1)).subscribe({
-      next: (cursoMateria) => {
-        const cursoMateriaActualizados = cursoMateria.filter(
-          (curso) => curso.id !== cursoId
-        );
-        this.cursoMateria$.next(cursoMateriaActualizados);
-      },
-      complete: () => {},
-      error: () => {},
-    });
-    return this.cursoMateria$.asObservable();
+      }
+    );
   }
 
-  obtenerCursoPorId(id: number): Observable<CursoMateria | undefined> {
-    return this.cursoMateria$
-      .asObservable()
-      .pipe(map((cursoMateria) => cursoMateria.find((a) => a.id === id)));
+  obtenerCursoPorId(id: number): Observable<CursoMateria> {
+    return this.httpClient.get<CursoMateria>(
+      `${enviroment.apiBaseUrl}/courses/${id}?_expand=subject`
+    );
   }
 
-  crearCurso(payload: CrearCursoPayload): Observable<CursoMateria[]> {
+  crearCurso(payload: CrearCursoPayload): Observable<CursoMateria> {
+    console.log(payload);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.httpClient
+    return this.httpClient
       .post<CursoMateria>(`${enviroment.apiBaseUrl}/courses`, payload, {
         headers,
       })
-      .subscribe();
-    return this.obtenerCursosMateria();
+      .pipe(
+        switchMap((curso: CursoMateria) => {
+          return this.obtenerCursoPorId(curso.id);
+        })
+      );
   }
 }

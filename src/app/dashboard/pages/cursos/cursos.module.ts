@@ -15,6 +15,10 @@ import { RouterModule } from '@angular/router';
 import { AbmCursosComponent } from './components/abm-cursos/abm-cursos.component';
 import { CursoDetalleComponent } from './components/curso-detalle/curso-detalle.component';
 import { MatSelectModule } from '@angular/material/select';
+import { EffectsModule } from '@ngrx/effects';
+import { CursosEffects } from './store/cursos.effects';
+import { StoreModule } from '@ngrx/store';
+import { cursosFeature } from './store/cursos.reducer';
 
 @NgModule({
   declarations: [CursosComponent, AbmCursosComponent, CursoDetalleComponent],
@@ -43,6 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
         component: CursoDetalleComponent,
       },
     ]),
+    EffectsModule.forFeature([CursosEffects]),
+    StoreModule.forFeature(cursosFeature),
   ],
 })
 export class CursosModule {}

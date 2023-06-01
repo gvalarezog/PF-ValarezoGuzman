@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AbmInscripcionesComponent } from './components/abm-inscripciones/abm-inscripciones.component';
-import { InscripcionesService } from './services/inscripciones.service';
 import { Curso } from '../cursos/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { InscripcionesActions } from './store/inscripciones.actions';
 import { Observable } from 'rxjs';
@@ -15,7 +13,7 @@ import { Subject } from '../materias/models';
 import { Alumno } from '../alumnos/models';
 import { Inscripcion } from './models';
 import { Usuario } from 'src/app/core/models';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-inscripciones',
@@ -41,10 +39,9 @@ export class InscripcionesComponent implements OnInit {
     private store: Store,
     private dialog: MatDialog,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private activatedRoute: ActivatedRoute
   ) {
-    this.authUser$ = this.authService.obtenerUsuarioAutenticado();
+    this.authUser$ = this.store.select(selectAuthUser);
     this.state$ = this.store.select(selectInscripcionesState);
   }
 

@@ -7,7 +7,8 @@ import { AlumnosService } from './services/alumnos.service';
 import { Alumno } from './models';
 import { Usuario } from 'src/app/core/models';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-alumnos',
@@ -36,9 +37,9 @@ export class AlumnosComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private alumnoService: AlumnosService,
-    private authService: AuthService
+    private store: Store
   ) {
-    this.authUser$ = this.authService.obtenerUsuarioAutenticado();
+    this.authUser$ = this.store.select(selectAuthUser);
     this.alumnoService.obtenerAlumnos().subscribe((alumnos) => {
       this.dataSource.data = alumnos;
     });

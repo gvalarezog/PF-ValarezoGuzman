@@ -56,9 +56,7 @@ export class UsuariosEffects {
       ofType(UsuariosActions.deleteUsuario),
       concatMap((action) =>
         this.usuariosService.eliminarUsuarioPorId(action.id).pipe(
-          map((data) =>
-            UsuariosActions.deleteUsuarioSuccess({ data: action.id })
-          ),
+          map(() => UsuariosActions.deleteUsuarioSuccess({ data: action.id })),
           catchError((error) =>
             of(UsuariosActions.deleteUsuarioFailure({ error }))
           )

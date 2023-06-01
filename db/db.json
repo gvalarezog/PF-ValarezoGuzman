@@ -26,15 +26,6 @@
       "password": "123",
       "token": "XGuPmbNeu9DdT3hGOvQ7",
       "id": 5
-    },
-    {
-      "nombre": "Li",
-      "apellido": "Na",
-      "email": "lna@mail.com",
-      "role": "user",
-      "password": "12345678",
-      "token": "TVdWaD0uliIR05P1ho3K",
-      "id": 6
     }
   ],
   "courses": [
@@ -51,9 +42,9 @@
       "id": 3
     },
     {
-      "subjectId": 3,
-      "fecha_inicio": "2023-05-01T05:00:00.000Z",
-      "fecha_fin": "2023-05-31T05:00:00.000Z",
+      "subjectId": 2,
+      "fecha_inicio": "2023-05-02T05:00:00.000Z",
+      "fecha_fin": "2023-05-30T05:00:00.000Z",
       "id": 4
     }
   ],
